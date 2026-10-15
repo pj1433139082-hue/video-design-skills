@@ -1,9 +1,15 @@
 # Changelog
 
+## 2026-10-15 — 修正 SECURITY.md 的上报通道说明
+
+- PR #19 曾在 `SECURITY.md` 里断言 `/security/advisories/new`「会返回 404」。**该断言是错的**：以维护者身份实际打开该页面会正常渲染草稿公告页（维护者始终可见），因此不能据此判断外部报告者也能用。
+- 事实复核：`GET /repos/pj1433139082-hue/video-design-skills/private-vulnerability-reporting` → `{"enabled": false}`，即 **Private vulnerability reporting 未启用**，外部报告者看不到「Report a vulnerability」按钮。
+- 已按事实改写该节（并说明维护者可见 ≠ 报告人可用），同时修正本 Changelog 中同源的错误表述。邮箱渠道不变。
+
 ## 2026-10-15 — 贡献与安全政策
 
 - 新增根目录 `CONTRIBUTING.md`：两个机械核查的跑法、单源正本清单、分支 / 提交 / PR 约定、不提交内容清单。
-- 新增根目录 `SECURITY.md`：支持的版本、已启用的仓库保护（secret scanning / push protection / `main` 分支保护），以及**邮箱上报渠道**——本仓库未启用 GitHub Private vulnerability reporting，`/security/advisories/new` 会返回 404。
+- 新增根目录 `SECURITY.md`：支持的版本、已启用的仓库保护（secret scanning / push protection / `main` 分支保护），以及**邮箱上报渠道**——本仓库未启用 GitHub Private vulnerability reporting，外部报告者看不到「Report a vulnerability」入口。
 - 未新增 `LICENSE` 与 `CODE_OF_CONDUCT.md`：第三方来源与许可清单仍在 Spec #1 的 #9 范围内，统一许可须待来源逐项核对后再决定。
 
 ## 2026-10-15 — eval 路径与 fixture 化（ticket #11）
