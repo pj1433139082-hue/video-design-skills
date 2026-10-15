@@ -1,0 +1,72 @@
+name: "✨ Feature Request / 能力提案"
+description: "提议新增技能能力、共享资源、类别模板或仓库工程改进"
+title: "[Feature]: "
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你为 video-design-skills 提议改进。
+
+        **前提约束**：本仓库的核心约定是「减少无必要步骤的前提是保持或提升质量」。
+        若提案以减少调用数、渲染次数或耗时为理由，请同时说明质量如何保持。
+
+  - type: dropdown
+    id: proposal-area
+    attributes:
+      label: "提案归属 (Proposal Area)"
+      options:
+        - "新技能（独立触发面）"
+        - "现有技能流程（consult Phase / build Step）"
+        - "共享资源（presets / tokens / 审美参考 / 类别模板）"
+        - "动效库组件（motion-library）"
+        - "仓库工程与 CI"
+        - "其他"
+    validations:
+      required: true
+
+  - type: textarea
+    id: motivation
+    attributes:
+      label: "使用场景与痛点 (Motivation)"
+      description: "你当前在哪一步卡住或重复劳动？请给出具体场景而不是泛化诉求。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: proposal
+    attributes:
+      label: "建议方案 (Proposed Solution)"
+      description: "描述你期望的能力、触发条件与产出物。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: impact
+    attributes:
+      label: "对现有流程的影响 (Impact)"
+      description: "会影响哪个 Phase / Step？是否需要同步修改 consult、build 或 shared 中的其他位置？"
+    validations:
+      required: true
+
+  - type: textarea
+    id: quality
+    attributes:
+      label: "质量影响评估 (Quality Impact)"
+      description: "该提案减少或增加了哪些步骤？质量阈值、设计决策点或验收环节是否受影响？"
+      placeholder: |
+        减少的步骤：
+        保持的质量约束（阈值 / 决策点 / 验收）：
+        仍需人工判断的位置：
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: "提交前确认 (Confirmations)"
+      options:
+        - label: "我已搜索过现有 Issue 与 Spec #1，确认该提案尚未被覆盖"
+          required: true
+        - label: "我理解本提案不以降低质量阈值或省略必要验证为代价来减少步骤"
+          required: true
