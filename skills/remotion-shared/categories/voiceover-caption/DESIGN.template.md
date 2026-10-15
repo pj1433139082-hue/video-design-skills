@@ -14,7 +14,7 @@
 
 ### 字幕风格
 - **词级高亮 TikTok 风**（highlightMode: "word"）
-- 字幕字体：Noto Sans SC 700，64px（1080 宽基准），白 + 描边
+- 字幕字体：Noto Sans SC 800，64px（1080 宽基准；字号字重底线以 `remotion-build/references/video-quality-metrics.md` §字幕硬阈值为准），白 + 描边
 - 高亮色 = 强调色（默认 volt 黄绿 `#AFFF00` 或珊瑚红）
 - 字幕区：底部居中，safeArea 上下 ≥120px，maxLines 2
 

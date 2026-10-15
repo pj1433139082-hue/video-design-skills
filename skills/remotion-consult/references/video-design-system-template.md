@@ -14,8 +14,8 @@
 
 ## 2. 字幕字体
 - caption / title / body 三档字体（避开 AI 字体黑名单，中文配 Noto Serif SC / Noto Sans SC / ZCOOL）
-- 画幅基准字号：1080 宽下 caption 64px / title 96px（16:9 时按比例换算）
-- **视频铁律（屏幕文字都是关键字）**：字幕 ≥64px/800、数据 mono ≥44px/700、标题 ≥88px/900、禁细体——**铁律数字唯一事实源 = `remotion-build/references/video-quality-metrics.md` §字幕硬阈值"视频铁律"行**，改阈值只改 metrics 一处，此处不复制数字。
+- 画幅基准字号：1080 宽下示例 caption 64px / title 96px（16:9 按比例换算）；示例值须 ≥ `remotion-build/references/video-quality-metrics.md` §字幕硬阈值底线
+- **字号字重底线（屏幕文字都是关键字）**：字幕 / 数据 mono / 标题的字号字重底线**此处不复制数字**——唯一事实源 = `remotion-build/references/video-quality-metrics.md` §字幕硬阈值；禁细体小字，改阈值只改该文件一处。
 - 字重 / 行高 / 描边+投影可读性
 - 高亮模式：word（词级）/ line（整句）/ none
 
