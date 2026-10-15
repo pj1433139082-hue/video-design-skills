@@ -1,0 +1,23 @@
+{
+  "skill_name": "remotion-build",
+  "evals": [
+    {
+      "id": 0,
+      "prompt": "把工作台/视频/volta-brand/ 里已有的口播稿.md 和 captions.srt 改造成 9:16 竖屏口播字幕品牌片。读 remotion-build skill（.claude/skills/remotion-build/）和它的 references（字幕对齐、mmx 素材管线、构建规范）。产出改造后的视频 DESIGN.md、captions.srt（帧对齐到 30fps）、src/Root.tsx + theme.ts + captions.ts 到 <workspace>/outputs/。不渲染 MP4，只产出代码与设计文档。说明你如何做字幕帧对齐和配音对齐。",
+      "expected_output": "9:16 视频 DESIGN.md + 帧对齐的 captions.srt + src 三件套（theme/captions/Root），说明字幕驱动与配音对齐方式",
+      "files": ["工作台/视频/volta-brand/口播稿.md", "工作台/视频/volta-brand/captions.srt"]
+    },
+    {
+      "id": 1,
+      "prompt": "按工作台/视频/volta-brand/DESIGN.md 的设计系统（含 Video Design Tokens、场景蓝图），为另一个虚构品牌「极光运动能量」写一条 16:9 品牌片的完整 src（theme.ts / captions.ts / Root.tsx + 场景组件）和 captions.srt 到 <workspace>/outputs/。从总动效库（工作台/视频/_动效库/）选组件。不渲染 MP4。说明你如何从 DESIGN.md 提取 tokens 并映射到新品牌的场景。不要复制任何现成项目的 src，凭 DESIGN.md 设计系统从零写。",
+      "expected_output": "新品牌 16:9 视频 src + captions.srt，设计系统 tokens 提取与场景映射说明",
+      "files": ["工作台/视频/volta-brand/DESIGN.md"]
+    },
+    {
+      "id": 2,
+      "prompt": "一句话需求：给「澄澈」植物茶饮品牌做一条 16:9 口播品牌片（约 20 秒），用 mmx 生成中文配音和背景音乐。先跑 remotion-consult（.claude/skills/remotion-consult/）澄清并产出视频 DESIGN.md（七段 + tokens + 场景蓝图），再跑 remotion-build（.claude/skills/remotion-build/）产出 captions.srt + src 三件套到 <workspace>/outputs/。不渲染 MP4。说明 consult 的澄清问题、类别锚定和 build 的字幕驱动方式。",
+      "expected_output": "视频 DESIGN.md + captions.srt + src，consult 澄清记录与字幕驱动说明",
+      "files": []
+    }
+  ]
+}
