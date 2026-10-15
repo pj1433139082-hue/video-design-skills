@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-15 — eval 路径与 fixture 化（ticket #11）
+
+- `skills/remotion-build/evals/evals.json` 的 `files` 与 prompt 路径改为仓内 fixture（`skills/remotion-build/evals/fixtures/sample-brand-minimal/`），不再指向维护者本机路径；技能路径统一为 `skills/remotion-*`，不再使用 `.claude/skills/` 前缀。
+- 新增合成 fixture：3 句口播稿 + 逐句对齐的 SRT + 最小 DESIGN.md（含 Video Design Tokens 与场景蓝图）。品牌为虚构，不含任何真实素材，可随仓公开。
+- 未使用 volta-brand 原始素材（其是否可公开由维护者另行决定）；**三个 eval 的实际运行与结论记录仍待补**，本条目不声称 eval 已通过。
+
 ## 2026-10-15 — 仓库协作工程配置
 
 - 新增 issue 模板（缺陷反馈 / 能力提案 / 文档一致性）与 PR 模板，统一 Spec #1 的工单与验收口径。
