@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-15 — 仓库协作工程配置
+
+- 新增 issue 模板（缺陷反馈 / 能力提案 / 文档一致性）与 PR 模板，统一 Spec #1 的工单与验收口径。
+- 新增 `checks` workflow：核查 `skills/*/SKILL.md` 的 frontmatter 与仓库 YAML / JSON 可解析性；`docs/verification/consistency-checks.sh` 随仓提供后自动纳入同一入口。
+- 本批次只动 `.github/`，未改动任何技能流程、质量阈值或验收环节。
+
 ## 2026-10-15 — 明确优化目标
 
 - 按用户补充，明确减少无必要步骤的前提是保持或提升质量。

@@ -1,0 +1,55 @@
+name: "📝 Documentation / 文档一致性"
+description: "报告文档矛盾、单源数字漂移、失效路径或术语不一致"
+title: "[Docs]: "
+labels: ["documentation"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        本仓库最关键的文档缺陷是**同一条决策在多处表述不一致**：
+        共享库查找顺序、字幕字号铁律、动效库组件数、对比度口径等。
+        这类问题请尽量给出全部命中位置，便于合并成一次单源修复。
+
+        相关正本：仓库根 `AGENTS.md`（工作约定）、Spec #1（流程优化总纲）。
+
+  - type: input
+    id: doc-path
+    attributes:
+      label: "受影响文档路径 (Affected Document Path)"
+      description: "受影响的文件路径，多个可用逗号分隔。"
+      placeholder: "skills/remotion-shared/SKILL.md, skills/remotion-consult/SKILL.md"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "问题说明 (Description)"
+      description: "描述表述模糊、相互矛盾、示例过时或术语不一致之处。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "证据与命中位置 (Evidence)"
+      description: "贴出原文引用，或给出可复跑的 grep 命令与结果——单源一致性问题需要能机械复核。"
+      render: shell
+    validations:
+      required: true
+
+  - type: textarea
+    id: suggested
+    attributes:
+      label: "建议修改 (Suggested Changes)"
+      description: "建议的改法；若涉及单源数字，请说明哪一处应作为正本、其余改成引用式表述。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification-boundary
+    attributes:
+      label: "验证边界 (Verification Boundary)"
+      description: "哪些检查实际运行过（如 docs/verification/consistency-checks.sh、grep）？哪些没有运行？"
+    validations:
+      required: true
