@@ -35,10 +35,16 @@
 
 请发邮件到：**pj1433139082@gmail.com**
 
-> 为什么不是 GitHub 的私密报告入口：本仓库位于个人账号下，
-> **GitHub 的 Private vulnerability reporting 未启用**，
-> 因此 `https://github.com/pj1433139082-hue/video-design-skills/security/advisories/new`
-> 会返回 404。上面的邮箱是该账号资料页上**已公开**的联系方式，是目前唯一可用的私密渠道。
+> **为什么不用 GitHub 的私密报告入口**：本仓库的 **Private vulnerability reporting 未启用**
+> （`GET /repos/pj1433139082-hue/video-design-skills/private-vulnerability-reporting` 返回
+> `{"enabled": false}`），外部报告者看不到「Report a vulnerability」按钮。
+>
+> 注意区分：**维护者本人**访问 `/security/advisories/new` 仍会正常打开草稿公告页（维护者始终
+> 可见），所以那条链接看起来「能用」并不代表外部报告人也能用——它不是为报告人准备的通道。
+>
+> 上面的邮箱是该账号资料页上**已公开**的联系方式，是目前对报告人唯一可用的通道。
+> 若希望改用 GitHub 原生流程，维护者可在仓库 Settings → Security 中开启
+> Private vulnerability reporting；届时本节需要同步更新。
 
 报告里请尽量包含：
 
