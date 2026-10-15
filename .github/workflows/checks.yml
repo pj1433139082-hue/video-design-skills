@@ -16,7 +16,8 @@ jobs:
   checks:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      # v5：v4 已因 Node 20 弃用被 runner 强制改跑 Node 24 并告警
+      - uses: actions/checkout@v5
 
       # 结构核查：技能卡片 frontmatter + 仓库 YAML/JSON 可解析性。
       # 脚本只用标准库；pyyaml 缺失时会把 YAML 级校验记为「未运行」而不是通过。
