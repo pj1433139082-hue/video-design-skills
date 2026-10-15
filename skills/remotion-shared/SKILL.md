@@ -1,6 +1,6 @@
 ---
 name: remotion-shared
-description: remotion-consult / remotion-build 的共享资源库，不是独立触发技能。当需要视频设计预设 tokens、总动效库（50 个组件）、审美参考、镜头与 tokens 规范、"分阶段注入矩阵"时读取本目录。用户说"做个视频/改视频方向"时不触发本卡片，触发面在 remotion-consult / remotion-build 的 SKILL.md。
+description: remotion-consult / remotion-build 的共享资源库，不是独立触发技能。当需要视频设计预设 tokens、总动效库（88 个组件）、审美参考、镜头与 tokens 规范、"分阶段注入矩阵"时读取本目录。用户说"做个视频/改视频方向"时不触发本卡片，触发面在 remotion-consult / remotion-build 的 SKILL.md。
 ---
 
 # remotion-shared — Remotion 视频共享资源库（非独立技能）
@@ -20,7 +20,7 @@ description: remotion-consult / remotion-build 的共享资源库，不是独立
 | `注入点分析.md` | 分阶段注入矩阵：consult Phase 1-5 / build Step 1-5 各阶段注入什么、从哪里、力度（强/参考） |
 | `video-design-presets.md` | 6 套已验证品牌风格浓缩 tokens（consult Phase 4 选定后一次性继承） |
 | `video-tokens-spec.md` | 视频版 design tokens 规范（网页 DESIGN.md 必须映射，禁止原样套用） |
-| `motion-library/` | 总动效库 50 个组件（转场 16 / 入场 12 / 背景 8 / 数据 6 / 文字 6 / 字幕 2），build Step 4 直接 import |
+| `motion-library/` | 总动效库 88 个组件（转场 26 / 入场 22 / 背景 26 / 数据 6 / 文字 6 / 字幕 2），build Step 4 直接 import |
 | `categories/` | 按视频类别注入：voiceover-caption / data-viz / product-demo / brand-motion |
 | `aesthetic-judgment/` | 审美判断规则（12 原则对照：anticipation / overshoot / staging 等） |
 | `video-anti-slop.md` | 视频反 AI-slop 清单 |

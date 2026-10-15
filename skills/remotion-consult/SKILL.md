@@ -116,32 +116,32 @@ description: 视频需求澄清 → 视频设计系统文档（DESIGN.md）的�
 - **禁复制**：不像素级克隆他人视频（可借鉴字幕风/节奏，不搬整条）。
 - **禁编造**：不虚构数据、品牌事实。
 - **对比度底线**：字幕 ≥3:1（含实拍/图片背景上）。
-- **视频字号底线（屏幕文字都是关键字）**：字幕 caption ≥64px/800、数据 mono ≥44px/700、标题 ≥88px/900——禁细体小字注释。**铁律数字唯一事实源 = `remotion-build/references/video-quality-metrics.md` §字幕硬阈值（"视频铁律"行），此处不复制数字，改阈值先改 metrics。**
+- **视频字号底线（屏幕文字都是关键字）**：字幕 / 数据 mono / 标题的字号字重底线**此处不复制数字**——唯一事实源 = `remotion-build/references/video-quality-metrics.md` §字幕硬阈值；禁细体小字注释，改阈值只改该文件一处。
 - **先澄清再设计**：没完成 Phase 1 不得跳方案。
 
 ## 参考文件
 
-> 📍 **remotion-shared 共享库查找顺序**：项目 `.claude/skills/remotion-shared/` → 全局 Codex → 全局 Claude Code。取能找到的第一个。
+> 📍 **remotion-shared 共享库查找顺序**：以 `remotion-shared/SKILL.md`「查找顺序（消费方硬约定）」为正本（全局源优先 → 项目级兼容），本文件不重述。下表 `remotion-shared/...` 路径按该正本顺序解析，不绑定特定客户端目录。
 
 | 文件 | 何时读 |
 |------|--------|
-| `.claude/skills/remotion-shared/video-anti-slop.md` | 任何阶段做方向判断时（防趋同） |
-| `.claude/skills/remotion-shared/video-real-library.md` | Phase 2 研究抓真实视频参考 |
+| `remotion-shared/video-anti-slop.md` | 任何阶段做方向判断时（防趋同） |
+| `remotion-shared/video-real-library.md` | Phase 2 研究抓真实视频参考 |
 | `资料库/AI工具/video-shotcraft/` | 镜头配方卡库（202 卡 12 类：运镜/节奏/转场/字体/特效），demos/{类}/{卡} 直接 copy，见 video-shots-spec |
 
 > **video-shotcraft 定位（第二动效库 / 模板库，不是分流路由）**：
 > - shotcraft = 完整可借鉴的**组件/动效库**（`demos/{类}/{卡}/{组件}.tsx` 场景级镜头动效 + `template/` 模板工程 + `assets/` 组件与音效）。所有视频**统一走本 consult→build，不按产品片/口播片分流**。
 > - **§8 选卡**：DESIGN §8.2 镜头卡列可选填，值带意图标记 `[copy]` / `[借思路]`。接入步骤唯一事实源 = `remotion-shared/video-shots-spec.md`「镜头卡接入步骤」（build 照执行）。
 > - 只有用户**点名**要用 shotcraft 模板（Ink Press）/ 自主自由创作 / 共同创作 时，才 Skill 触发 `video-shotcraft` 按其自身流程走（用户显式选择，非自动路由）。
-| `.claude/skills/remotion-shared/video-shots-spec.md` | 镜头卡体系 + 权威技巧（导演/剪辑/设计/声音，搜索+平台提炼） |
-| `.claude/skills/remotion-shared/video-design-presets.md` | Phase 4 选预设设计系统（6 套已验证品牌） |
-| `.claude/skills/remotion-shared/video-tokens-spec.md` | Phase 4 写 tokens 时 |
-| `.claude/skills/remotion-shared/categories/{类别}/DESIGN.template.md` | Phase 4 按类别模板起稿 |
-| `.claude/skills/remotion-shared/categories/{类别}/motion-list.md` | Phase 4 挑选动效组合 |
-| `.claude/skills/remotion-shared/motion-library/` | 总动效库组件清单（50 个，build 用） |
+| `remotion-shared/video-shots-spec.md` | 镜头卡体系 + 权威技巧（导演/剪辑/设计/声音，搜索+平台提炼） |
+| `remotion-shared/video-design-presets.md` | Phase 4 选预设设计系统（6 套已验证品牌） |
+| `remotion-shared/video-tokens-spec.md` | Phase 4 写 tokens 时 |
+| `remotion-shared/categories/{类别}/DESIGN.template.md` | Phase 4 按类别模板起稿 |
+| `remotion-shared/categories/{类别}/motion-list.md` | Phase 4 挑选动效组合 |
+| `remotion-shared/motion-library/` | 总动效库组件清单（88 个，build 用） |
 | `资料库/AI工具/设计系统库/` | Phase 2 研究/Phase 3 提案：品牌 DESIGN.md 审美锚点 |
 | `资料库/AI工具/审美参考库/审美参考总览.md` | Phase 2 前端/摄影/剪辑趋势 + Phase 4 节奏设计 |
-| `.claude/skills/remotion-shared/aesthetic-judgment/` | Phase 4 定方向时：摄影/剪辑/前端排版六轴判别（素材风格/节奏/布局） |
+| `remotion-shared/aesthetic-judgment/` | Phase 4 定方向时：摄影/剪辑/前端排版六轴判别（素材风格/节奏/布局） |
 | `.claude/skills/ui-ux-pro-max/SKILL.md` | 设计规则引擎：定视频画面风格时查（Phase 4） |
 | `.claude/skills/hallmark/SKILL.md` | 反 AI slop 审查（57 门禁）：方向是否专业/防模板（Phase 2/3） |
 | `.claude/skills/taste-skill/SKILL.md` | 品味检查（Pre-Flight 40+ 项）：方向是否够格（Phase 3 自检） |

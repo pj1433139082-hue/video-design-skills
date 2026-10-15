@@ -22,9 +22,11 @@ export const THEME = {
   },
 
   fonts: {
-    caption: { family: "Noto Sans SC", size: 64, lineHeight: 1.4, weight: 700 },
+    // 字号字重底线以 remotion-build/references/video-quality-metrics.md §字幕硬阈值为准（唯一事实源）；
+    // 下列默认值已对齐底线，照抄本契约即达标；改底线只改 metrics，不在此复制阈值。
+    caption: { family: "Noto Sans SC", size: 64, lineHeight: 1.4, weight: 800 },
     title:   { family: "Noto Sans SC", size: 96, lineHeight: 1.2, weight: 900 },
-    mono:    { family: "JetBrains Mono", size: 28, lineHeight: 1.5, weight: 500 }, // 数据标签，必填
+    mono:    { family: "JetBrains Mono", size: 44, lineHeight: 1.5, weight: 700 }, // 数据标签，必填
     body:    { family: "Noto Sans SC", size: 48, lineHeight: 1.5, weight: 400 },  // 正文，可选
   },
 

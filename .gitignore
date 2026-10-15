@@ -5,6 +5,8 @@ node_modules/
 __pycache__/
 *.pyc
 .venv/
+# 框架本机指针（adopt 生成，按框架约定应排除，不随公开仓库分发）
+.agent-workflow.local.json
 out/
 outputs/
 preview/

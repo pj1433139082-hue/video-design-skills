@@ -5,7 +5,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 
 # remotion-build — 生成 Remotion 视频
 
-按 `DESIGN.md`（remotion-consult 产出）用 React 代码生成 MP4。字幕是唯一时间轴，动效从总动效库 import，素材走跨 harness 路由。
+按 `DESIGN.md`（remotion-consult 产出）用 React 代码生成 MP4。**有字幕时，字幕是唯一时间轴**（无字幕类别如 brand-motion 由场景基准时长 / BGM 节拍驱动，见 `remotion-shared/categories/{类别}/DESIGN.template.md`）；动效从总动效库 import，素材走跨 harness 路由。
 
 ## 工作流
 
@@ -30,7 +30,10 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 
 10 轮未对齐 → 记录未决项带病进入构建。
 
-### Step 1 — 字幕驱动流程（核心）
+### Step 1 — 字幕驱动流程（核心，适用于有字幕类别）
+
+> 类别适用性：voiceover-caption / data-viz / product-demo 为字幕驱动（走本 Step）；brand-motion（字幕无或 minimal）跳过 srt 时间轴推导，改由场景基准时长 / BGM 节拍驱动，见 `remotion-shared/categories/{类别}/DESIGN.template.md`。
+
 按 `references/captions-guide.md`：
 1. **来源路由**：已有 .srt/.vtt → 直接用；有口播稿.md → 起草草稿 .srt；从零 → 先草稿口播稿再 .srt。
 2. `parseSrt({input})` → `Caption[]`，校验空段/时间重叠/越界。
@@ -112,7 +115,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 11. 逐条核对验收标准 → STATUS PASS/FAIL/BLOCKED，NEXT_OWNER。
 
 ## 红线
-- **字幕驱动是硬约束**：captions.srt 存在即时间轴唯一来源，时长由其推导。
+- **字幕驱动是硬约束（有字幕时）**：captions.srt 存在即时间轴唯一来源，时长由其推导；无字幕类别（brand-motion）由场景基准时长 / BGM 节拍驱动，不强制 captions.srt。
 - **先抽帧后渲染**：still 不过不 render 全片。
 - **镜头卡借鉴不强制**：DESIGN §8 选卡则接入（copy `shotcraft/demos/{类}/{卡}` 适配），没选卡或中文片借思路不算漏；未接卡不 BLOCKED。
 - **素材走真实生图，不生成 SVG**：主体素材优先 Codex 或已配置图像后端，透明走 `--transparent`/`remove_white_bg.py`。
@@ -122,6 +125,9 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 - **禁编造**：字幕/数据不虚构。
 
 ## 参考文件
+
+> 📍 **remotion-shared 共享库查找顺序**：以 `remotion-shared/SKILL.md`「查找顺序（消费方硬约定）」为正本（全局源优先 → 项目级兼容），本文件不重述。下表 `remotion-shared/...` 路径按该正本顺序解析，不绑定特定客户端目录。
+
 | 文件 | 何时读 |
 |------|--------|
 | `references/captions-guide.md` | Step 1 字幕时间戳对齐（核心） |
@@ -133,11 +139,11 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 | `references/video-quality-metrics.md` | Step 5 自动化判别指标（frame_judge.py + VMAF/NIMA/ASL 阈值） |
 | `references/hyperframes-guide.md` | Step 0 渲染核=HyperFrames 时：HTML 数据属性/GSAP/check 规则 + CLI |
 | `references/hyperframes-blocks.md` | HyperFrames 渲染核时选动效块：registry blocks 154 个按类速查（等价 shotcraft） |
-| `.claude/skills/remotion-shared/video-anti-slop.md` | Step 3 反向提示词基线 |
-| `.claude/skills/remotion-shared/video-tokens-spec.md` | 写 theme.ts 时 |
-| `.claude/skills/remotion-shared/categories/{类别}/motion-list.md` | 选动效组合 |
-| `.claude/skills/remotion-shared/video-shots-spec.md` | 镜头配方卡体系 + 权威技巧（build 选镜头卡：demos/{类}/{卡} copy 进项目） |
-| `.claude/skills/remotion-shared/aesthetic-judgment/` | Step 5 验收：摄影/剪辑/前端排版六轴判别（<3 触发修订） |
+| `remotion-shared/video-anti-slop.md` | Step 3 反向提示词基线 |
+| `remotion-shared/video-tokens-spec.md` | 写 theme.ts 时 |
+| `remotion-shared/categories/{类别}/motion-list.md` | 选动效组合 |
+| `remotion-shared/video-shots-spec.md` | 镜头配方卡体系 + 权威技巧（build 选镜头卡：demos/{类}/{卡} copy 进项目） |
+| `remotion-shared/aesthetic-judgment/` | Step 5 验收：摄影/剪辑/前端排版六轴判别（<3 触发修订） |
 | `.claude/skills/ui-ux-pro-max/SKILL.md` | 设计规则引擎：Step 4 构建时查 UX 准则 + 优先级 |
 | `.claude/skills/taste-skill/SKILL.md` | Step 5 最终检查：Pre-Flight 40+ 项（交付前自检） |
 | `.claude/skills/hallmark/SKILL.md` | Step 5 设计审查：57 门禁 / `hallmark audit`（验收前） |
