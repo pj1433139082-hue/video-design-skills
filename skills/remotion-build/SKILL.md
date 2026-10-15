@@ -5,7 +5,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 
 # remotion-build — 生成 Remotion 视频
 
-按 `DESIGN.md`（remotion-consult 产出）用 React 代码生成 MP4。字幕是唯一时间轴，动效从总动效库 import，素材走跨 harness 路由。
+按 `DESIGN.md`（remotion-consult 产出）用 React 代码生成 MP4。**有字幕时，字幕是唯一时间轴**（无字幕类别如 brand-motion 由场景基准时长 / BGM 节拍驱动，见 `remotion-shared/categories/{类别}/DESIGN.template.md`）；动效从总动效库 import，素材走跨 harness 路由。
 
 ## 工作流
 
@@ -30,7 +30,10 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 
 10 轮未对齐 → 记录未决项带病进入构建。
 
-### Step 1 — 字幕驱动流程（核心）
+### Step 1 — 字幕驱动流程（核心，适用于有字幕类别）
+
+> 类别适用性：voiceover-caption / data-viz / product-demo 为字幕驱动（走本 Step）；brand-motion（字幕无或 minimal）跳过 srt 时间轴推导，改由场景基准时长 / BGM 节拍驱动，见 `remotion-shared/categories/{类别}/DESIGN.template.md`。
+
 按 `references/captions-guide.md`：
 1. **来源路由**：已有 .srt/.vtt → 直接用；有口播稿.md → 起草草稿 .srt；从零 → 先草稿口播稿再 .srt。
 2. `parseSrt({input})` → `Caption[]`，校验空段/时间重叠/越界。
@@ -112,7 +115,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 11. 逐条核对验收标准 → STATUS PASS/FAIL/BLOCKED，NEXT_OWNER。
 
 ## 红线
-- **字幕驱动是硬约束**：captions.srt 存在即时间轴唯一来源，时长由其推导。
+- **字幕驱动是硬约束（有字幕时）**：captions.srt 存在即时间轴唯一来源，时长由其推导；无字幕类别（brand-motion）由场景基准时长 / BGM 节拍驱动，不强制 captions.srt。
 - **先抽帧后渲染**：still 不过不 render 全片。
 - **镜头卡借鉴不强制**：DESIGN §8 选卡则接入（copy `shotcraft/demos/{类}/{卡}` 适配），没选卡或中文片借思路不算漏；未接卡不 BLOCKED。
 - **素材走真实生图，不生成 SVG**：主体素材优先 Codex 或已配置图像后端，透明走 `--transparent`/`remove_white_bg.py`。
