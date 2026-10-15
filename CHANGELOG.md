@@ -1,5 +1,11 @@
 # Changelog
 
+## 2026-10-15 — 贡献与安全政策
+
+- 新增根目录 `CONTRIBUTING.md`：两个机械核查的跑法、单源正本清单、分支 / 提交 / PR 约定、不提交内容清单。
+- 新增根目录 `SECURITY.md`：支持的版本、已启用的仓库保护（secret scanning / push protection / `main` 分支保护），以及**邮箱上报渠道**——本仓库未启用 GitHub Private vulnerability reporting，`/security/advisories/new` 会返回 404。
+- 未新增 `LICENSE` 与 `CODE_OF_CONDUCT.md`：第三方来源与许可清单仍在 Spec #1 的 #9 范围内，统一许可须待来源逐项核对后再决定。
+
 ## 2026-10-15 — eval 路径与 fixture 化（ticket #11）
 
 - `skills/remotion-build/evals/evals.json` 的 `files` 与 prompt 路径改为仓内 fixture（`skills/remotion-build/evals/fixtures/sample-brand-minimal/`），不再指向维护者本机路径；技能路径统一为 `skills/remotion-*`，不再使用 `.claude/skills/` 前缀。
