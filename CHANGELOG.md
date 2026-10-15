@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-15 — 贡献者行为准则
+
+- 新增根目录 `CODE_OF_CONDUCT.md`：Contributor Covenant 2.1 的中文版（含四档执行阶梯），上报渠道与 `SECURITY.md` 一致，使用维护者邮箱 `pj1433139082@gmail.com`。
+- 该文件明确写出**本仓库未启用 GitHub Private vulnerability reporting**，因此不存在 GitHub 内的私密通报入口——沿用 PR #20 的事实口径，避免再次写出与实际不符的通道。
+- `CONTRIBUTING.md` 的「动手前必读」后补一行，指向 `CODE_OF_CONDUCT.md` 与 `SECURITY.md`。
+- **仍未新增 `LICENSE`**：统一许可须待 Spec #1 的 #9（第三方来源清单）完成后决定，见下方 2026-10-15「贡献与安全政策」条目。
+
 ## 2026-10-15 — 修正 SECURITY.md 的上报通道说明
 
 - PR #19 曾在 `SECURITY.md` 里断言 `/security/advisories/new`「会返回 404」。**该断言是错的**：以维护者身份实际打开该页面会正常渲染草稿公告页（维护者始终可见），因此不能据此判断外部报告者也能用。

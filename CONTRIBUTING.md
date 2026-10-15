@@ -11,6 +11,8 @@
 - `docs/DEPENDENCIES.md` —— 哪些引用随仓提供、哪些属于外部依赖。
 - `docs/HANDOFF-QWEN.md` —— 流程优化的交接口径。
 
+参与讨论与提交请遵守 `CODE_OF_CONDUCT.md`；安全相关问题请走 `SECURITY.md` 的渠道。
+
 ---
 
 ## 1. 什么改动受欢迎
