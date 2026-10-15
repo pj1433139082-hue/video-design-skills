@@ -3,8 +3,8 @@
 
 用途（CI seam）：把「每个 skills/<dir>/SKILL.md 的 YAML frontmatter 完整、
 name 与目录名一致、description 非空」「.github/ISSUE_TEMPLATE 下的模板符合
-GitHub issue form 语法」以及「仓库内 YAML / JSON 均可解析」变成机械可查的
-断言，作为拉取请求的必需状态检查入口。
+GitHub issue form 语法」以及「仓库内 YAML / JSON 均可解析」「纯量没有因 ' #'
+被静默截断」变成机械可查的断言，作为拉取请求的必需状态检查入口。
 
 运行：python3 .github/scripts/check_structure.py
 退出码：0 = 全部 PASS；1 = 有 FAIL。
@@ -23,6 +23,7 @@ from __future__ import annotations
 
 import json
 import pathlib
+import re
 import sys
 
 ROOT = pathlib.Path(__file__).resolve().parents[2]
@@ -119,6 +120,10 @@ def check_skills() -> None:
         if frontmatter is None:
             bad(f"{rel} 第 1 行不是 '---'，缺少 YAML frontmatter")
             continue
+
+        # frontmatter 文本从文件第 2 行开始，故行号偏移 1
+        for lineno, message in _hash_truncation_risks(frontmatter, offset=1):
+            bad(f"{rel}:{lineno} （frontmatter）{message}")
 
         name = frontmatter_field(frontmatter, "name")
         if name != skill_dir.name:
@@ -269,6 +274,52 @@ def _config_problems(data: dict) -> list[str]:
     return problems
 
 
+def _hash_truncation_risks(text: str, offset: int = 0) -> list[tuple[int, str]]:
+    """检出「未加引号的纯量里含 ' #'」。
+
+    YAML 把 ' #' 之后当行内注释吃掉：`about: ……挂在 Spec #1 下。` 解析出来是
+    `……挂在 Spec`——解析成功、行数不变，只是值被静默截短，语法核查发现不了，
+    只有看未解析的原始文本才能发现。块标量（| / >）里的 # 是字面量，需跳过。
+    """
+    risks: list[tuple[int, str]] = []
+    block_indent: int | None = None
+
+    for number, raw in enumerate(text.splitlines(), start=1):
+        stripped = raw.strip()
+        indent = len(raw) - len(raw.lstrip())
+
+        if block_indent is not None:
+            if not stripped or indent > block_indent:
+                continue
+            block_indent = None
+
+        if not stripped or stripped.startswith("#"):
+            continue
+
+        if re.match(r"^\s*(?:-\s+)?[\w.-]+:\s*[|>]", raw):
+            block_indent = indent
+            continue
+
+        match = re.match(r"^\s*(?:-\s+)?[\w.-]+:\s*(\S.*)$", raw)
+        if not match:
+            continue
+
+        value = match.group(1).strip()
+        if value[:1] in {'"', "'", "|", ">", "[", "{", "&", "*"}:
+            continue
+        if " #" in value:
+            kept = value.split(" #", 1)[0]
+            risks.append(
+                (
+                    number + offset,
+                    "未加引号的纯量含 ' #'，YAML 会丢掉 # 之后的内容"
+                    f"（实际值将成为 {kept!r}）；请给该值加引号",
+                )
+            )
+
+    return risks
+
+
 def check_issue_templates(yaml_module) -> None:
     if yaml_module is None:
         note("issue 模板语法未核查：缺少 pyyaml（CI 中由 workflow 安装）")
@@ -284,8 +335,13 @@ def check_issue_templates(yaml_module) -> None:
 
     for path in files:
         rel = path.relative_to(ROOT).as_posix()
+        text = path.read_text(encoding="utf-8")
+
+        for lineno, message in _hash_truncation_risks(text):
+            bad(f"{rel}:{lineno} {message}")
+
         try:
-            data = yaml_module.safe_load(path.read_text(encoding="utf-8"))
+            data = yaml_module.safe_load(text)
         except yaml_module.YAMLError as exc:
             first_line = str(exc).splitlines()[0] if str(exc) else "YAML 错误"
             bad(f"{rel} 无法解析：{first_line}")

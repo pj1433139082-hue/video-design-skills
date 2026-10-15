@@ -6,6 +6,6 @@ contact_links:
   - name: 📦 外部依赖与引用边界 (DEPENDENCIES)
     url: https://github.com/pj1433139082-hue/video-design-skills/blob/main/docs/DEPENDENCIES.md
     about: 独立使用者必读：哪些引用随仓提供、哪些属于外部依赖、各自的前提是什么。
-  - name: 🎬 流程优化总纲 (Spec #1)
+  - name: "🎬 流程优化总纲 (Spec #1)"
     url: https://github.com/pj1433139082-hue/video-design-skills/issues/1
-    about: 流程改进、批次划分与验收口径的统一入口；相关工单一律挂在 Spec #1 下。
+    about: "流程改进、批次划分与验收口径的统一入口；相关工单一律挂在 Spec #1 下。"
