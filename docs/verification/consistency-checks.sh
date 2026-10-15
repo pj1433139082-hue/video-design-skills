@@ -41,13 +41,14 @@ else
 fi
 
 # ---- 检查 2：共享库查找顺序单源 ----
-# 方案 A：shared/SKILL.md 为查找顺序正本；consult/build 引用它，不再各自重述；
+# 方案 A：shared/SKILL.md 为查找顺序正本（以"全局唯一源"为定义标记）；consult/build 引用它，不再各自重述；
 #         客户端专有词（全局 Codex / 全局 Claude Code）应消失。
-n_order=$(grep -rl "查找顺序" "$SKILLS" 2>/dev/null | wc -l | tr -d ' ')
-if [ "$n_order" = "1" ] && grep -q "查找顺序" "$SHARED_SKILL" 2>/dev/null; then
-  ok "2a 查找顺序单源：'查找顺序' 仅出现于 shared/SKILL.md"
+# 注：检查"定义标记"而非"查找顺序"字样——引用句会提到"查找顺序见 shared"，不算重复定义。
+n_order=$(grep -rl "全局唯一源" "$SKILLS" 2>/dev/null | wc -l | tr -d ' ')
+if [ "$n_order" = "1" ] && grep -q "全局唯一源" "$SHARED_SKILL" 2>/dev/null; then
+  ok "2a 查找顺序单源：定义标记 '全局唯一源' 仅出现于 shared/SKILL.md（consult/build 为引用）"
 else
-  bad "2a 查找顺序单源：'查找顺序' 出现于 $n_order 个文件（应=1，仅 shared）；命中：$(grep -rl '查找顺序' "$SKILLS" 2>/dev/null | tr '\n' ' ')"
+  bad "2a 查找顺序单源：'全局唯一源' 出现于 $n_order 个文件（应=1，仅 shared 定义）；命中：$(grep -rl '全局唯一源' "$SKILLS" 2>/dev/null | tr '\n' ' ')"
 fi
 n_client=$(grep -rn "全局 Codex\|全局 Claude Code\|全局Codex\|全局Claude" "$SKILLS" 2>/dev/null | wc -l | tr -d ' ')
 if [ "$n_client" = "0" ]; then

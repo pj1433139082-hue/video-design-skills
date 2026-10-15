@@ -122,6 +122,9 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 - **禁编造**：字幕/数据不虚构。
 
 ## 参考文件
+
+> 📍 **remotion-shared 共享库查找顺序**：以 `remotion-shared/SKILL.md`「查找顺序（消费方硬约定）」为正本（全局源优先 → 项目级兼容），本文件不重述。下表 `remotion-shared/...` 路径按该正本顺序解析，不绑定特定客户端目录。
+
 | 文件 | 何时读 |
 |------|--------|
 | `references/captions-guide.md` | Step 1 字幕时间戳对齐（核心） |
@@ -133,11 +136,11 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 | `references/video-quality-metrics.md` | Step 5 自动化判别指标（frame_judge.py + VMAF/NIMA/ASL 阈值） |
 | `references/hyperframes-guide.md` | Step 0 渲染核=HyperFrames 时：HTML 数据属性/GSAP/check 规则 + CLI |
 | `references/hyperframes-blocks.md` | HyperFrames 渲染核时选动效块：registry blocks 154 个按类速查（等价 shotcraft） |
-| `.claude/skills/remotion-shared/video-anti-slop.md` | Step 3 反向提示词基线 |
-| `.claude/skills/remotion-shared/video-tokens-spec.md` | 写 theme.ts 时 |
-| `.claude/skills/remotion-shared/categories/{类别}/motion-list.md` | 选动效组合 |
-| `.claude/skills/remotion-shared/video-shots-spec.md` | 镜头配方卡体系 + 权威技巧（build 选镜头卡：demos/{类}/{卡} copy 进项目） |
-| `.claude/skills/remotion-shared/aesthetic-judgment/` | Step 5 验收：摄影/剪辑/前端排版六轴判别（<3 触发修订） |
+| `remotion-shared/video-anti-slop.md` | Step 3 反向提示词基线 |
+| `remotion-shared/video-tokens-spec.md` | 写 theme.ts 时 |
+| `remotion-shared/categories/{类别}/motion-list.md` | 选动效组合 |
+| `remotion-shared/video-shots-spec.md` | 镜头配方卡体系 + 权威技巧（build 选镜头卡：demos/{类}/{卡} copy 进项目） |
+| `remotion-shared/aesthetic-judgment/` | Step 5 验收：摄影/剪辑/前端排版六轴判别（<3 触发修订） |
 | `.claude/skills/ui-ux-pro-max/SKILL.md` | 设计规则引擎：Step 4 构建时查 UX 准则 + 优先级 |
 | `.claude/skills/taste-skill/SKILL.md` | Step 5 最终检查：Pre-Flight 40+ 项（交付前自检） |
 | `.claude/skills/hallmark/SKILL.md` | Step 5 设计审查：57 门禁 / `hallmark audit`（验收前） |
