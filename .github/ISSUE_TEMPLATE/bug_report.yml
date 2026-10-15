@@ -1,0 +1,107 @@
+name: "🐛 Bug Report / 缺陷反馈"
+description: "报告技能指令矛盾、文档失效路径、流程断点或与仓库声明不符的缺陷"
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        感谢你帮助改进 video-design-skills。
+
+        **⚠️ 请勿粘贴**：真实私有素材、客户视频、账号凭据、内网路径或 API Token。
+        本仓库是公开仓库，复现示例请使用虚构数据或仓库自带内容。
+
+        **⚠️ 请区分静态与动态结论**：读到文档矛盾属于静态核查；只有实际跑过
+        consult → build 才能声称渲染成功或视觉验收通过。未运行的检查请写在
+        「验证边界」里，不要标为通过。
+
+  - type: dropdown
+    id: affected-area
+    attributes:
+      label: "受影响范围 (Affected Area)"
+      description: "问题出现在哪个技能或哪一层？"
+      options:
+        - "skills/remotion-consult（需求澄清 / DESIGN.md）"
+        - "skills/remotion-build（生成 / 渲染 / 验收）"
+        - "skills/remotion-shared（共享规范 / 类别模板 / 动效库）"
+        - "仓库文档（README / docs/）"
+        - "CI 与仓库工程配置（.github/）"
+        - "不确定 / 跨多个技能"
+    validations:
+      required: true
+
+  - type: input
+    id: client
+    attributes:
+      label: "智能体客户端 (Agent Client)"
+      description: "在哪个客户端里触发的？技能由不同客户端加载时行为可能不同。"
+      placeholder: "e.g. Claude Code / Codex / Cursor / 其他"
+    validations:
+      required: true
+
+  - type: input
+    id: install-layout
+    attributes:
+      label: "技能安装位置 (Skill Install Layout)"
+      description: "技能装在全局技能目录还是项目级目录？共享库查找顺序与此直接相关。"
+      placeholder: "e.g. 全局 ~/.claude/skills/ ／ 项目级 .claude/skills/ ／ 直接指向克隆目录"
+    validations:
+      required: true
+
+  - type: textarea
+    id: description
+    attributes:
+      label: "问题描述 (Problem Description)"
+      description: "清晰简洁地说明实际发生了什么。"
+    validations:
+      required: true
+
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: "最小可复现步骤 (Minimal Reproducible Steps)"
+      description: "给出能稳定复现的最短步骤，包含让智能体读了哪个文件、下达了什么指令。"
+      placeholder: |
+        1. 让智能体读取 skills/remotion-build/SKILL.md
+        2. 输入「...」
+        3. 观察到智能体执行了 ...（期望是 ...）
+    validations:
+      required: true
+
+  - type: textarea
+    id: evidence
+    attributes:
+      label: "证据引用 (Evidence)"
+      description: "贴出问题原文并注明文件路径与行号；若是矛盾表述，请把两处都贴出来。"
+      render: markdown
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: "期望行为 (Expected Behavior)"
+      description: "按仓库当前声明，正确行为应该是什么？"
+    validations:
+      required: true
+
+  - type: textarea
+    id: verification-boundary
+    attributes:
+      label: "验证边界 (Verification Boundary)"
+      description: "你实际运行了哪些检查？哪些没有运行？未运行的不要写成通过。"
+      placeholder: |
+        已运行：静态阅读 / grep / .github 结构核查
+        未运行：未实际渲染视频，未做视觉验收
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: confirmations
+    attributes:
+      label: "提交前确认 (Confirmations)"
+      options:
+        - label: "我已搜索过现有 Issue，确认该问题尚未被报告"
+          required: true
+        - label: "我确认内容中不包含真实私有素材、凭据、内网路径或第三方受限资产"
+          required: true

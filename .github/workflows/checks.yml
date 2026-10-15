@@ -1,0 +1,38 @@
+name: Repository checks
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      # 结构核查：技能卡片 frontmatter + 仓库 YAML/JSON 可解析性。
+      # 脚本只用标准库；pyyaml 缺失时会把 YAML 级校验记为「未运行」而不是通过。
+      - name: 安装核查依赖
+        run: python3 -m pip install --quiet pyyaml
+
+      - name: 结构核查（frontmatter / YAML / JSON）
+        run: python3 .github/scripts/check_structure.py
+
+      # 仓库自带的静态一致性 harness（ticket #3）随仓提供后自动纳入同一入口。
+      # 尚未提供时按 AGENTS.md 纪律记为「未运行」，不声明通过。
+      - name: 静态一致性核查（仓库自带 harness）
+        run: |
+          set -u
+          if [ -f docs/verification/consistency-checks.sh ]; then
+            bash docs/verification/consistency-checks.sh
+          else
+            echo "::notice title=未运行::docs/verification/consistency-checks.sh 尚未随仓提供（见 ticket #3）。本步骤记为「未运行」，不代表通过。"
+          fi
