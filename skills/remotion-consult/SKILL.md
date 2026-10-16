@@ -138,7 +138,7 @@ description: 视频需求澄清 → 视频设计系统文档（DESIGN.md）的�
 | `remotion-shared/video-tokens-spec.md` | Phase 4 写 tokens 时 |
 | `remotion-shared/categories/{类别}/DESIGN.template.md` | Phase 4 按类别模板起稿 |
 | `remotion-shared/categories/{类别}/motion-list.md` | Phase 4 挑选动效组合 |
-| `remotion-shared/motion-library/` | 总动效库组件清单（88 个，build 用） |
+| `remotion-shared/motion-library/` | 总动效库组件清单（89 个，build 用） |
 | `资料库/AI工具/设计系统库/` | Phase 2 研究/Phase 3 提案：品牌 DESIGN.md 审美锚点 |
 | `资料库/AI工具/审美参考库/审美参考总览.md` | Phase 2 前端/摄影/剪辑趋势 + Phase 4 节奏设计 |
 | `remotion-shared/aesthetic-judgment/` | Phase 4 定方向时：摄影/剪辑/前端排版六轴判别（素材风格/节奏/布局） |

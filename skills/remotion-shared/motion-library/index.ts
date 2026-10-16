@@ -31,5 +31,8 @@ export * from "./entrances-extra";
 export * from "./backgrounds-extra";
 // Web 扒源码适配背景（WebGL 程序化地形/霓虹等高线 + CSS 网格/radial 渐变光斑）
 export * from "./backgrounds-web";
+// 场景卡系统（数据驱动 cut.type 分发 SceneRenderer + StatCard；T1 tracer，契约见 scene-cards-contract.md）
+export * from "./scene-cards";
 
 export type { HighlightMode, CaptionTheme, CaptionLayout } from "./captions-highlight";
+export type { SceneCut, StatCut, SceneCardTheme } from "./scene-cards";

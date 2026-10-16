@@ -71,6 +71,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 - 项目 init：从 `_dev/remotion-tutorial` 复制骨架 + `npm i @remotion/captions@<对齐版本>` + 保留 Chrome 路径。
 - **从总动效库 import 组件**（`工作台/视频/_动效库/`）或复制到 `src/components/`。
 - **镜头卡可选接入**：DESIGN §8.2 选卡则照 `remotion-shared/video-shots-spec.md`「镜头卡接入步骤」执行（含 `[copy]`/`[借思路]` 意图标记）；中文片默认借思路。
+- **场景卡（数据驱动，T1 起）**：DESIGN §8.2 标了 `cut.type` 的句子，用 `motion-library/scene-cards.tsx` 的 `<SceneRenderer cut={{ type: "stat", ... }} />` 按 type 渲染场景卡（当前仅 `stat`/StatCard；契约见 `motion-library/scene-cards-contract.md`），颜色/字体从 tokens 传入，**不必手搓数据卡 SVG**；未知 `cut.type` 会**显式抛错**（不静默渲染空白）。
 - src 分层：Root.tsx / theme.ts / captions.ts / components/。
 - 确定性动画（`useCurrentFrame`/`interpolate`/`spring`，禁 `Math.random` 与浏览器定时器）。
 - 有 DESIGN.md 就严格按 tokens 执行。
@@ -100,6 +101,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
    - 字幕：存在且对齐、可读（对比度 ≥3:1）、无破字
    - 转场：句间有转场/入场动效，不是裸切或静止
    - 素材：无 AI 乱码文字、层次符合 §8.1、透明叠加干净
+   - 场景卡（若 §8.2 标了 `cut.type`）：`SceneRenderer` 按 type 正确渲染、数值/标签/单位齐全、对比度达底线、卡为主画面不与背景场景图重叠；**未静默降级**（未知 type 应已抛错，不是空白帧）
    - 动效：至少 2 种动效在场（素材进出场 + 字体 + 背景 三选二）、背景带动效
    - 无 AI 味：对照 `video-anti-slop.md` 反向提示词
 6. **遮挡校验 + 视觉模式核对（借鉴 paper-collage-video spatial-contract，2026-08-16 扩展）**：抽帧逐句验证——①大字胶囊在预留区（顶部留白）②主体不压大字/字幕区 ③前景不遮挡中后景主体 ④**卡动效与场景图不重叠**：完整画面卡（里程表/表盘/粒子柱/聚光暗场）绝不当场景图叠加（视觉模式三选一，见 DESIGN §8.2）⑤**动效意义与句意呼应**（vision 判粒子柱/扫光/数字滚动在该场景表达什么、是否与口播语义一致，意义不明触发修订）。遮挡/意义不明 → 改视觉模式或去掉多余卡。
