@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-16 — gitignore 框架 adopt 骨架
+
+- `.gitignore` 追加 agent-workflow-framework `adopt` 生成的本机协作态：`tasks/`（含 `tasks/kickoff/analysis-report.md` 证据基，维护者决定先不入库）、`project.json`、`AGENTS.framework.md`、`CONTEXT.md`、`docs/00-入口层` ~ `docs/30-触发层` 四层文档模板。
+- 只忽略编号子目录；`docs/` 下真实文档（DEPENDENCIES / HANDOFF-QWEN / ATTRIBUTION / verification / case-studies）仍被跟踪，未误伤。
+- 目的：消除未跟踪骨架被并行会话 `git add -A` 误提交进公开仓库的撞车风险。`.agent-workflow.local.json` 已由前序改动忽略。
+- 纯仓库工程改动，未动任何技能流程、质量阈值或验收环节。
+
 ## 2026-10-16 — 仓库自身许可证（MIT）
 
 - 新增根目录 `LICENSE`：MIT，`Copyright (c) 2026 video-design-skills contributors`，与同名姊妹仓 `learn-model-framework`、`agent-workflow-framework` 的许可保持一致。
