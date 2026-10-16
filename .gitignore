@@ -7,6 +7,16 @@ __pycache__/
 .venv/
 # 框架本机指针（adopt 生成，按框架约定应排除，不随公开仓库分发）
 .agent-workflow.local.json
+# agent-workflow-framework adopt 骨架（本机协作态，不进公开仓库）：
+# 任务记录（含 tasks/kickoff/analysis-report.md 等）、框架入口/领域/项目卡、四层文档模板
+tasks/
+project.json
+AGENTS.framework.md
+CONTEXT.md
+docs/00-入口层/
+docs/10-流程层/
+docs/20-规则层/
+docs/30-触发层/
 out/
 outputs/
 preview/
