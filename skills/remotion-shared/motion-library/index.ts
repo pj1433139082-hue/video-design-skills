@@ -33,6 +33,8 @@ export * from "./backgrounds-extra";
 export * from "./backgrounds-web";
 // 场景卡系统（数据驱动 cut.type 分发 SceneRenderer + StatCard；T1 tracer，契约见 scene-cards-contract.md）
 export * from "./scene-cards";
+// 场景卡系统 T2：文字/要点/对比/标题类场景卡（TextCard/CalloutBox/ComparisonCard/HeroTitle/SectionTitle/EndTag）
+export * from "./scene-cards-text";
 
 export type { HighlightMode, CaptionTheme, CaptionLayout } from "./captions-highlight";
 export type { SceneCut, StatCut, SceneCardTheme } from "./scene-cards";

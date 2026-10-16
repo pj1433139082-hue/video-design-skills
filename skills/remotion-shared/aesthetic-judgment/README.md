@@ -32,6 +32,6 @@
 - 框架每篇末尾列了对应的原文参考文件
 
 ## 相关
-- 动效库：`.claude/skills/remotion-shared/motion-library/`（89 组件）
+- 动效库：`.claude/skills/remotion-shared/motion-library/`（95 组件）
 - 预设设计系统：`video-design-presets.md`
 - 反 AI 味：`video-anti-slop.md`
