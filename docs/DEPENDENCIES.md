@@ -41,6 +41,7 @@
 | `iqa-pytorch` / `scenedetect` / `librosa` | video-quality-metrics 软指标 | 未随仓 | 明写可选；`pip install` 后启用 NIMA/ASL/BPM，不装则跳过软指标 |
 | HyperFrames 后端 | build Step 0 渲染核二选一 | 未随仓 | 可选渲染核；默认走 Remotion 核，不需 HyperFrames |
 | video-shotcraft 镜头卡库 | consult §8.0 / build Step 4 | 未整体随仓 | 可选第二动效库；不接入则只用总动效库组件，未接卡不 BLOCKED |
+| `@remotion/transitions` | `motion-library/scene-transition.tsx`（T5）可选上游 | 未随仓 | 可选；本仓默认 crossfade（`SceneTransitionSeries`）**零新增依赖**即可消卡间硬切/渐入空白；需官方 slide/wipe/flip 等 presentation 时 `npm i @remotion/transitions@<与 remotion 同版本>`（本地骨架 toolchain 当前未含该包，见 #31 订正） |
 | MiniMax / edge-tts / Codex image_gen / GPT / ACE-Step | mmx-media-pipeline / codex-imagegen | 账号/密钥不随仓 | 第三方后端；消费者自备账号或选其他后端，edge-tts 为无 Key 兜底 |
 
 ### 仅维护者本地

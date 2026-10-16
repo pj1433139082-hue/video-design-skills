@@ -72,6 +72,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 - **从总动效库 import 组件**（`工作台/视频/_动效库/`）或复制到 `src/components/`。
 - **镜头卡可选接入**：DESIGN §8.2 选卡则照 `remotion-shared/video-shots-spec.md`「镜头卡接入步骤」执行（含 `[copy]`/`[借思路]` 意图标记）；中文片默认借思路。
 - **场景卡（数据驱动，T1 起）**：DESIGN §8.2 标了 `cut.type` 的句子，用 `motion-library/scene-cards.tsx` 的 `<SceneRenderer cut={{ type: "stat", ... }} />` 按 type 渲染场景卡（当前 `stat/text/callout/comparison/hero/section/end` 可用；契约见 `motion-library/scene-cards-contract.md`），颜色/字体从 tokens 传入，**不必手搓数据卡 SVG**；未知 `cut.type` 会**显式抛错**（不静默渲染空白）。
+- **场景卡串联转场（T5，防硬切/渐入空白）**：背靠背多张场景卡**不要**用相邻 `<Sequence>` 硬接（实测会硬切 pop + 段首若干帧只剩平底背景近空白）；改用 `motion-library/scene-transition.tsx` 的 `<SceneTransitionSeries items={[{cut,theme},...]} segmentFrames crossfadeFrames />` 交叉淡化串联——overlap 期 outgoing/incoming 透明度互补（和≈1），任何一帧至少一卡可见，不露空底；首卡默认不渐入（`firstFadeIn=false`）消开头空白。**零新增依赖**；需官方 slide/wipe/flip 等 presentation 再装可选 `@remotion/transitions`（见 `docs/DEPENDENCIES.md` 可选项）。
 - src 分层：Root.tsx / theme.ts / captions.ts / components/。
 - 确定性动画（`useCurrentFrame`/`interpolate`/`spring`，禁 `Math.random` 与浏览器定时器）。
 - 有 DESIGN.md 就严格按 tokens 执行。
