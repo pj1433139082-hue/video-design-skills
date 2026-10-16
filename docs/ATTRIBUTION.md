@@ -64,6 +64,7 @@
 | ui-ux-pro-max（UX 准则/设计规则引擎） | consult Phase 4、build Step 4/5 | 待核对（外部技能，未随仓） |
 | design-shared（review-panel 评审面板 / wcag-basics） | consult Phase 4、build Step 5 | 待核对（外部技能，未随仓） |
 | open-design/craft/anti-ai-slop（"七宗罪"去模板 + 151 设计系统替代） | consult/build 参考表、build Step 3 | 待核对（外部技能，未随仓） |
+| calesthio/OpenMontage（数据驱动 `cut.type` → 场景组件分发架构、场景卡词表、逐词字幕 / 自适应 scrim 思路） | `motion-library/scene-cards.tsx`、`motion-library/scene-cards-contract.md`（T1 起，见 #27/#34） | 已知（**AGPL-3.0**）——**仅 clean-room 借鉴架构 / 思路 / 词表，未复制其任何源码或资产**；本仓实现全部从零自写，随本仓 MIT。**禁把其代码 copy 进本仓**（AGPL 强传染，会与本仓 MIT 冲突）。 |
 
 ## 维护约定
 
