@@ -1,5 +1,12 @@
 # Changelog
 
+## 2026-10-16 — 仓库自身许可证（MIT）
+
+- 新增根目录 `LICENSE`：MIT，`Copyright (c) 2026 video-design-skills contributors`，与同名姊妹仓 `learn-model-framework`、`agent-workflow-framework` 的许可保持一致。
+- 前置条件已满足：Spec #1 的 #9（第三方来源清单）已完成关闭，`docs/ATTRIBUTION.md` 已按类别逐项标注 `已知`/`待核对`，因此这次能写清许可边界——本仓**原创文本与源码适用 MIT**，清单中的第三方引用**各自保留原有许可**，不因被引用而适用 MIT。
+- 同步修正此前两处「暂不添加许可证 / 属单独决策」的表述：`README.md` 新增「许可证」节并指向 `LICENSE`；`docs/ATTRIBUTION.md` 的边界声明与「维护约定」由「单独决策」改为已定案。此前记在本文件「贡献者行为准则」条目里的「仍未新增 `LICENSE`」由本条取代。
+- 未改动任何第三方引用的许可状态：`待核对` 保持 `待核对`，不因本仓加了 `LICENSE` 就改标 `已知`。
+
 ## 2026-10-15 — 贡献者行为准则
 
 - 新增根目录 `CODE_OF_CONDUCT.md`：Contributor Covenant 2.1 的中文版（含四档执行阶梯），上报渠道与 `SECURITY.md` 一致，使用维护者邮箱 `pj1433139082@gmail.com`。
