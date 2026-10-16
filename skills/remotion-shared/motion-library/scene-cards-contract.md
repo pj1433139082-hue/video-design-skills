@@ -11,7 +11,7 @@
 | cut.type | 场景卡 | 关键字段 | 状态 |
 |----------|--------|---------|------|
 | `stat` | StatCard | label / value / prefix / suffix / decimals / caption | T1 ✅ |
-| `text` / `callout` / `comparison` / `hero` / `section` / `end` | （T2 文字/要点/对比类卡） | — | 待建（#28） |
+| `text` / `callout` / `comparison` / `hero` / `section` / `end` | TextCard / CalloutBox / ComparisonCard / HeroTitle / SectionTitle / EndTag | 各自 cut 字段（heading+body / title+body / left+right / title+subtitle / index+title / tagline+credit） | T2 ✅（#28） |
 | `pie` / `kpi` /（已有图表包装成卡） | （T3 数据可视化卡） | — | 待建（#29） |
 
 ## 二、怎么用（build Step 4）

@@ -16,6 +16,20 @@ import {
   useVideoConfig,
 } from "remotion";
 import { AnimatedNumber } from "./data-anim";
+import {
+  CalloutBox,
+  ComparisonCard,
+  EndTag,
+  HeroTitle,
+  SectionTitle,
+  TextCard,
+  type CalloutCut,
+  type ComparisonCut,
+  type EndCut,
+  type HeroCut,
+  type SectionCut,
+  type TextCut,
+} from "./scene-cards-text";
 
 // ---------- 数据契约：SceneCut ----------
 // 每句/每段口播对应一个 cut；build 按 cut.type 分发到对应场景卡，而非每帧手写。
@@ -32,8 +46,16 @@ export type StatCut = {
   caption?: string; // 可选补充句
 };
 
-// T1 的 union 只有 stat；扩充时在此追加：export type SceneCut = StatCut | TextCut | ...
-export type SceneCut = StatCut;
+// T2 起 union 扩到文字/要点/对比/标题类；T3 再扩图表类（pie/kpi）。
+// 每加一种 type = 在 SceneCut union 加一支 + 在 SceneRenderer 加一个 case + 写一张卡。
+export type SceneCut =
+  | StatCut
+  | TextCut
+  | CalloutCut
+  | ComparisonCut
+  | HeroCut
+  | SectionCut
+  | EndCut;
 
 // ---------- 场景卡主题（token 注入接口，走项目 tokens.ts） ----------
 export type SceneCardTheme = {
@@ -187,10 +209,34 @@ export const SceneRenderer: React.FC<{
         />
       );
     }
+    case "text": {
+      const { type, ...rest } = cut;
+      return <TextCard {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
+    case "callout": {
+      const { type, ...rest } = cut;
+      return <CalloutBox {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
+    case "comparison": {
+      const { type, ...rest } = cut;
+      return <ComparisonCard {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
+    case "hero": {
+      const { type, ...rest } = cut;
+      return <HeroTitle {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
+    case "section": {
+      const { type, ...rest } = cut;
+      return <SectionTitle {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
+    case "end": {
+      const { type, ...rest } = cut;
+      return <EndTag {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
     default: {
       const badType = (cut as { type: string }).type;
       throw new Error(
-        `SceneRenderer: 未知 cut.type "${badType}"（T1 仅支持 "stat"；扩充见 scene-cards-contract.md）`
+        `SceneRenderer: 未知 cut.type "${badType}"（当前支持 stat/text/callout/comparison/hero/section/end；扩充见 scene-cards-contract.md）`
       );
     }
   }
