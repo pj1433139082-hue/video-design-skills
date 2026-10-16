@@ -28,6 +28,7 @@
 3. 颜色/字体走**项目 tokens**：通过 `SceneRenderer` 的 `theme`（`SceneCardTheme`）注入 `accent` / `surface` / `textColor` / `monoFont` / `labelFont`，SceneRenderer 转发给场景卡，**不写死**；不传则用卡内默认值。
 4. 底层动效**复用已有原语**（StatCard 组合 `data-anim.tsx` 的 `AnimatedNumber`），不重写数字滚动。
 5. 未知 `cut.type` → SceneRenderer **显式抛错**，绝不静默渲染空白。
+6. **背靠背串联（T5）**：多张场景卡连续出现时，用 `scene-transition.tsx` 的 `<SceneTransitionSeries items={[...]} segmentFrames crossfadeFrames />` 交叉淡化串联，**不要**用相邻 `<Sequence>` 硬接——硬接会硬切 pop 且段首若干帧只剩平底背景（渐入空白）。crossfade 的 overlap 期 outgoing/incoming 透明度互补（和≈1），不露空底；首卡默认不渐入。零新增依赖。
 
 ## 三、验收（build Step 5）
 

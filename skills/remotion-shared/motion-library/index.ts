@@ -35,6 +35,8 @@ export * from "./backgrounds-web";
 export * from "./scene-cards";
 // 场景卡系统 T2：文字/要点/对比/标题类场景卡（TextCard/CalloutBox/ComparisonCard/HeroTitle/SectionTitle/EndTag）
 export * from "./scene-cards-text";
+// 场景卡转场层 T5：SceneTransitionSeries（crossfade 串联场景卡，消卡间硬切/渐入空白；零新增依赖）
+export * from "./scene-transition";
 
 export type { HighlightMode, CaptionTheme, CaptionLayout } from "./captions-highlight";
 export type { SceneCut, StatCut, SceneCardTheme } from "./scene-cards";
