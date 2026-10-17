@@ -88,3 +88,21 @@ export const { captions } = parseSrt({
   input: require("fs").readFileSync("public/captions.srt", "utf-8"),
 });
 ```
+
+## 七、中文逐词 captions 制备（预分词，T4）
+
+`createTikTokStyleCaptions` 按**空白**切 token。中文无空格 → 整句 captions 在 word 模式 = 单 token = **整句同亮（退化为句级）**。要真逐词高亮，captions 必须是 **word 级条目**（预分词）：
+
+1. 把每句口播按**词 / 标点 / 语气**预分词（如"蓝光 散射 比 红光 强 得多"）。
+2. 每个词一条 `Caption`：`{ text, startMs, endMs }`；词时间戳在该句 span 内按字数**线性插值**分配（有 TTS word 时间戳则用真值）。
+3. word 模式即逐词依次点亮；验收用 vision 核高亮粒度 = **逐词**（多 token 依次 active），**非整句同亮**。
+4. **降级规则**：拿不到 word 级时间戳 / 不预分词 → 用 `highlightMode="line"`，并在 DESIGN.md 与验收记录**显式标注"句级降级"**；**禁止** word 模式配句级 captions 静默退化。
+
+```tsx
+// 中文 word 级 captions 示例（预分词 + 句内插值）
+const captions: Caption[] = [
+  { text: "蓝光", startMs: 0, endMs: 400 },
+  { text: "散射", startMs: 400, endMs: 800 },
+  { text: "比红光强", startMs: 800, endMs: 1600 },
+];
+```
