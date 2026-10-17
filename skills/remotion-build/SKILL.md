@@ -21,14 +21,18 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 - **HyperFrames 核**（HeyGen 开源 HTML→MP4，可选）：`index.html` 数据属性 + GSAP timeline（`npx hyperframes init/render`，本地免费）→ 更接近网页手感、内置 `npm run check`（lint+对比度+运动）。素材/BGM/字幕/验收全复用，只换渲染写法。**规则见 `references/hyperframes-guide.md`**。
 - 判断：复杂镜头卡（翻牌/粒子/3D）或已有 Remotion 项目 → Remotion；纯 HTML/GSAP 动效、想网页手感、需内置 lint → HyperFrames。**同一项目勿混两核。**
 
-### Step 0.5 — 需求对齐 + 验收标准（grill-me，强制，≤10 轮）
-跑 `grill-me` 技能对齐：一句话需求、画幅/时长/平台、**字幕来源**（.srt/.vtt/口播稿/从零）、模式、风格方向。**必须产出验收标准**四类：
+### Step 0.5 — 验收标准 + 需求对齐（拆分，#12）
+
+**0.5a 验收标准（强制产出，无轮数上限）**：不论模式，必须先产出验收标准四类（本步不做需求问答）：
 - **结构**：类别/画幅/时长/fps
 - **视觉**：字幕字体/配色/构图 与 DESIGN.md 或参考一致（自由模式"无 AI 味"）
 - **内容**：字幕全句到齐、无错字、时间戳覆盖全片、文案真实
 - **技术**：字幕帧对齐（句首句尾帧字幕存在）、still 抽帧通过、MP4 渲染成功
 
-10 轮未对齐 → 记录未决项带病进入构建。
+**0.5b 需求对齐（grill-me）**：
+- **模式 1-3**：照旧跑 `grill-me` 对齐——一句话需求、画幅/时长/平台、**字幕来源**（.srt/.vtt/口播稿/从零）、模式、风格方向。
+- **模式 4（已有 DESIGN.md）**：**复用 DESIGN.md 已定决策**，对照 DESIGN 七段 + tokens 契约逐字段核，**只就缺失字段提问**；字段齐全则 0 问，直接回 0.5a 产出验收标准。
+- **≤10 轮上限只约束 0.5b**；0.5b 10 轮未对齐 → 记录未决项带病进入构建（0.5a 验收标准仍必须产出）。
 
 ### Step 1 — 字幕驱动流程（核心，适用于有字幕类别）
 
@@ -68,7 +72,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 
 ### Step 4 — 构建（技术底线）
 按 `references/remotion-build-guide.md`：
-- 项目 init：从 `_dev/remotion-tutorial` 复制骨架 + `npm i @remotion/captions@<对齐版本>` + 保留 Chrome 路径。
+- **项目复用（#13）**：**复用 consult Phase 5 已备工程**（`工作台/视频/{slug}/`，唯一一次 init），不重新复制骨架/重装依赖；仅补 `npm i @remotion/captions@<对齐版本>` 等缺失包与保留 Chrome 路径。**仅当 Phase 5 被跳过**（无样张工程）才按原法 init，并在门禁台账记录"init 次数=1（build 自建）"。
 - **从总动效库 import 组件**（`工作台/视频/_动效库/`）或复制到 `src/components/`。
 - **镜头卡可选接入**：DESIGN §8.2 选卡则照 `remotion-shared/video-shots-spec.md`「镜头卡接入步骤」执行（含 `[copy]`/`[借思路]` 意图标记）；中文片默认借思路。
 - **场景卡（数据驱动，T1 起 · T7 收口为默认路径）**：DESIGN §8.2「场景卡编列表」标了 `cut.type` 的句子，**默认从场景卡组装**——单卡用 `motion-library/scene-cards.tsx` 的 `<SceneRenderer cut={{ type: "stat", ... }} />`，背靠背多卡用 `scene-transition.tsx` 的 `<SceneTransitionSeries>`（当前 `stat/text/callout/comparison/hero/section/end/pie/kpi/bar/line/ring` 可用；契约见 `motion-library/scene-cards-contract.md`），颜色/字体从 tokens 传入；**手搓 SVG 仅作无对应卡型时的兜底**，且须在验收记录说明原因；未知 `cut.type` 会**显式抛错**（不静默渲染空白）。
@@ -96,7 +100,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 - **层3 +动效**（连续帧）：帧差/连续帧 vision 判动效真实发生 + 动效与场景不重叠（卡是完整画面则不当场景图叠加，视觉模式见 §8.2）；
 - **层4 整体**（成片）：frame_judge 全片 + `audio_sync_check.py` 音画同步 + 遮挡校验 + 四技能计分 + 动作证明。
 1. `npx remotion compositions` 确认真 id；
-2. **still 抽帧 3-5 张（句首/句尾/转场帧）——抽"终态帧"不是动效中途**（实测教训 2026-08-17）：抽帧选**动作完成后的帧**（0.82 终态 / 尾部定格后），不抽动效进行中帧——中途帧会让 vision/人眼误判"缺失/静态/黑框"（S2 翻牌中途无红章、S6 里程表滚动中无周期点、S7 时间线中段无人像卡都是抽帧时机错，抽终态帧才对）。字幕存在且对齐、构图不破；
+2. **still 抽帧 3-5 张（句首/句尾/转场帧）——抽"终态帧"不是动效中途**（实测教训 2026-08-17）：抽帧选**动作完成后的帧**（0.82 终态 / 尾部定格后），不抽动效进行中帧——中途帧会让 vision/人眼误判"缺失/静态/黑框"（S2 翻牌中途无红章、S6 里程表滚动中无周期点、S7 时间线中段无人像卡都是抽帧时机错，抽终态帧才对）。字幕存在且对齐、构图不破；**抽帧复用（#13）**：Phase 5 样张审批已核的 beat（句首/句尾/转场关键帧）直接复用其抽帧与 vision 结论，Step 5 只补抽 Phase 5 未覆盖的 beat（呼吸 gap / 场景卡段 / 终态 / 跨句转场）；复用与补抽均在门禁台账标注来源与帧号；
 3. **字幕对齐验证**：句首帧字幕已出现、句尾帧未提前消失；
 4. **自动化硬指标判别**：抽帧后跑 `python scripts/media/frame_judge.py preview/*.png --subtitle-hex <DESIGN 字幕色，如 E8833A> --subtitle-threshold 3.0 --text-bg-hex <文字胶囊底，如 F2F0EB>`（**--text-region** 文字在角落时传实际位置 tl/tr/bl/br/center，防底部误报；**--text-bg-hex** 已知胶囊底则直接算字幕 vs 底真对比，跳过众数——众数抓场景色，文字叠场景时不准；大字场景阈值 3.0 / 正文 4.5；任一 FAIL 触发修订）；可选 `pip install iqa-pytorch` 后加 NIMA 美学分（>6.5 记参考档）；指标阈值见 `references/video-quality-metrics.md`；**暗色设计亮度 FAIL 不阻塞**（见 metrics 暗色设计说明，以对比度为准）；
 5. **每张抽帧对照 checklist 核（弱项 <3 触发修订）**：

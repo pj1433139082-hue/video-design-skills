@@ -104,6 +104,7 @@ description: 视频需求澄清 → 视频设计系统文档（DESIGN.md）的�
 ### Phase 5 — 预览 + 风格样张审批门（可选，默认开）
 
 不渲染全片。产出：
+- **项目准备（#13，Phase 5 内、样张审批前，唯一一次 init）**：建**最小可渲染 Remotion 工程**落 `工作台/视频/{slug}/`——骨架（`_dev/remotion-tutorial` 复制，或 `npx create-video@latest --blank`）+ node_modules（**优先 junction 复用既有骨架**，免 npm install 与数百 MB 拷贝）+ `theme.ts`（DESIGN tokens 契约）+ `captions.ts`/srt 接线 + Root 注册 composition。**样张预览与后续 build 全片都跑在这同一个工程上，不重复 init**；build Step 4 复用之（仅 Phase 5 被跳过时才允许 build 自行 init，并在门禁台账记录）。
 - 3-5 张**关键帧抽帧**（`npx remotion still <id> --frame=N`，覆盖句首/句尾/转场帧）——让用户确认构图与字幕位置；
 - 或 3-5 秒**低分辨率样片**（`--scale=0.25`）——让用户看真实运动节奏。
 - **风格样张审批门（借鉴 paper-collage-video style-proof）**：定方向后，先渲染 1-2 个关键句的 3-5s 真实样张（低分辨率）给用户确认——风格/配色/动效手感是否对味，**确认后才进入 remotion-build 全片制作**（避免全片做完才发现风格方向不对）。
