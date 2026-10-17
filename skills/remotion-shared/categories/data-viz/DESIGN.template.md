@@ -21,6 +21,7 @@
 | `FadeTransition` | 场景转场 |
 | `FadeEntrance` | 图表入场 |
 | `CaptionLayer` | 逐词字幕（highlightMode="word"，需 word 级 captions；句级 srt 显式降级 line） |
+| `SceneRenderer` / `SceneTransitionSeries` | 数据场景卡组装（stat/kpi/bar/line/pie/ring）+ 卡间 crossfade；cut.type 由 §8.2 场景卡编列表驱动 |
 
 ## 适用场景
 数据报告 / 统计叙事 / 指标解读 / 学术数据可视化。

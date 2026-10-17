@@ -19,6 +19,7 @@
 | `FadeEntrance` | 截图/主体入场 |
 | `FadeTransition` | 场景转场 |
 | `CaptionLayer` | 整句字幕（highlightMode="line"） |
+| `SceneRenderer` / `SceneTransitionSeries` | 开场/章节/对比/要点/收尾场景卡 + 卡间 crossfade；cut.type 由 §8.2 场景卡编列表驱动 |
 
 ## 适用场景
 产品 demo / 教程解说 / 功能发布会 / 软件使用演示。

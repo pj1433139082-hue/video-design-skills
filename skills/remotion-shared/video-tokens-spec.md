@@ -80,3 +80,20 @@ export const THEME = {
 ## 五、与 design-tokens-spec 的关系
 
 web 的 `--color-*` / `--space-*` / `--ease-*` / `--duration-*` 语义在此保留（colors/fonts/motion/timing），新增视频特有的 `timing`（帧时长节奏）、`layout`（画面构图安全区）、`captions`（字幕高亮参数）三维。
+
+## 六、场景卡 tokens（T7 收口）
+
+场景卡（`motion-library/scene-cards*.tsx`）的颜色/字体/间距**一律走 THEME tokens，禁写死**；卡组件以 props 接收（`SceneCardTheme`），由 `tokens.ts` 传入：
+
+| 场景卡 token | 映射到 THEME | 说明 / 底线 |
+|--------------|-------------|------------|
+| `card.accent` | `colors.accent` | 卡边框 / 强调数值 / 下划线 |
+| `card.surface` | `colors.surface`（半透明化，如 `rgba(surface,0.92)`） | 卡底；与背景对比须保证卡内文字可读 |
+| `card.textColor` | `colors.textPrimary` | 卡内主文字 |
+| `card.statFont` | `fonts.mono` | 数据数值字体；**≥44px/字重≥700**（metrics 数据 mono 底线） |
+| `card.labelFont` | `fonts.caption`（或 title） | 卡说明/标题字体；字号 ≥ 对应底线 |
+| `card.radius` / `card.padding` | 新增语义 token（建议 24-28 / 44-72px） | 圆角与内边距，全片统一 |
+| `scrim.bgLightness` | §8.1 每场景字段（0-1） | 驱动 `AdaptiveCaptionScrim` 强度（captions-guide §八），不写死 |
+
+- 卡内文字对比度守 metrics 底线（数据 mono 大字 ≥3:1 / 正文 4.5:1）；frame_judge 用卡底有效色核。
+- 场景卡选型（用哪张、cut 编排）仍是 consult 设计决策（§8.2 场景卡编列表），tokens 只定"长什么样"，不定"用不用"。
