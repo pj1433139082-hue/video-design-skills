@@ -98,6 +98,8 @@ export const { captions } = parseSrt({
 3. word 模式即逐词依次点亮；验收用 vision 核高亮粒度 = **逐词**（多 token 依次 active），**非整句同亮**。
 4. **降级规则**：拿不到 word 级时间戳 / 不预分词 → 用 `highlightMode="line"`，并在 DESIGN.md 与验收记录**显式标注"句级降级"**；**禁止** word 模式配句级 captions 静默退化。
 
+> **#42 修复后（库侧自分页）**：`motion-library/captions-highlight.tsx` 的 `WordHighlight` 已**自分页**——按句末标点（。！？；!?;）/ 单页字数上限（18）/ 词间 gap（350ms）断页，中文**无需前导空格 hack**；页显示区间 = [首 token.fromMs, 末 token.toMs]，**句尾即消失、gap 无字幕**。旧"前导空格换页"数据会被 trim 兼容。`buildWordPages(captions)` 已导出可单测。
+
 ```tsx
 // 中文 word 级 captions 示例（预分词 + 句内插值）
 const captions: Caption[] = [

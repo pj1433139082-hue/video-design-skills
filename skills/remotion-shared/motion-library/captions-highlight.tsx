@@ -1,16 +1,17 @@
 // motion-library/captions-highlight.tsx
 // 字幕组件：词级高亮（TikTok 风）/ 整句模式
-// 依赖 @remotion/captions 的 createTikTokStyleCaptions + remotion 的 Sequence/useCurrentFrame
+// 依赖 remotion 的 Sequence/useCurrentFrame；word 模式分页为**本文件自实现**（#42 修复）。
 //
-// 注意：
-// 1. 中文无空格分词，createTikTokStyleCaptions 会将整句作单 token → 词级高亮对中文退化为句级。
-// 2. 更重要：createTikTokStyleCaptions 会把间隔 < combineTokensWithinMilliseconds 的相邻句子
-//    合并成一个 page。因此 line/none 模式（最常见的逐句字幕）**不走该函数**，
-//    直接用 captions 数组逐句 <Sequence>，帧对齐完全可控。只有明确要词级高亮的 word 模式才用。
+// 注意（#42 修复后）：
+// 1. 分页不再依赖 @remotion/captions 的 createTikTokStyleCaptions——它仅以"token 以空格开头"换页
+//    （英文行为），中文无空格会整篇并入一页；且其 page.durationMs 延到下一页开始，导致句尾字幕
+//    滞留进呼吸 gap。现改为自分页：句末标点（。！？；!?;）/ 单页字数上限 / 词间 gap 阈值 断页，
+//    中文无需前导空格 hack（旧数据的前导空格会被 trim 兼容）。
+// 2. 页显示区间 = [首 token.fromMs, 末 token.toMs]，**句尾即消失**，gap 无字幕（字幕对齐预期）。
+// 3. line/none 模式不走分页，直接用 captions 数组逐句 Sequence，帧对齐完全可控。
 
 import React from "react";
 import { AbsoluteFill, Sequence, useCurrentFrame, useVideoConfig } from "remotion";
-import { createTikTokStyleCaptions } from "@remotion/captions";
 import type { Caption } from "@remotion/captions";
 
 export type HighlightMode = "word" | "line" | "none";
@@ -100,26 +101,57 @@ export const CaptionLayer: React.FC<Props> = ({
   );
 };
 
-// word 模式：createTikTokStyleCaptions 分页 + 当前词高亮
+// ---------- word 模式：自分页（#42 修复）+ 当前词高亮 ----------
+type WordToken = { text: string; fromMs: number; toMs: number };
+type WordPage = { tokens: WordToken[]; startMs: number; endMs: number };
+
+const SENT_END = /[。！？；!?;]$/; // 句末标点断页
+const MAX_PAGE_CHARS = 18; // 单页字数上限（防超长句溢出）
+const PAGE_GAP_MS = 350; // 词间间隔超此值断页（句间呼吸 gap）
+
+// 中文无需前导空格 hack：按 句末标点 / 字数上限 / 词间 gap 断页；
+// 页区间 = [首 token.fromMs, 末 token.toMs]（句尾即消失，gap 无字幕）。
+export const buildWordPages = (captions: Caption[]): WordPage[] => {
+  const pages: WordPage[] = [];
+  let cur: WordToken[] = [];
+  let chars = 0;
+  const flush = () => {
+    if (cur.length === 0) return;
+    pages.push({
+      tokens: cur,
+      startMs: cur[0].fromMs,
+      endMs: cur[cur.length - 1].toMs,
+    });
+    cur = [];
+    chars = 0;
+  };
+  captions.forEach((c) => {
+    const text = c.text.trim(); // 兼容旧"前导空格换页"数据
+    if (text === "") return;
+    if (cur.length > 0 && c.startMs - cur[cur.length - 1].toMs > PAGE_GAP_MS) {
+      flush();
+    }
+    cur.push({ text, fromMs: c.startMs, toMs: c.endMs });
+    chars += text.length;
+    if (SENT_END.test(text) || chars >= MAX_PAGE_CHARS) flush();
+  });
+  flush();
+  return pages;
+};
+
 const WordHighlight: React.FC<{
   captions: Caption[];
   theme: CaptionTheme;
   layout: CaptionLayout;
 }> = ({ captions, theme, layout }) => {
   const { fps } = useVideoConfig();
-  // 中文整句单 token → combineThreshold 取小值，避免把相邻句子合并成一页
-  const { pages } = createTikTokStyleCaptions({
-    captions,
-    combineTokensWithinMilliseconds: 50,
-  });
+  const pages = buildWordPages(captions);
 
   return (
     <AbsoluteFill>
       {pages.map((page, i) => {
         const startFrame = Math.round((page.startMs / 1000) * fps);
-        const endFrame = Math.round(
-          ((page.startMs + page.durationMs) / 1000) * fps
-        );
+        const endFrame = Math.round((page.endMs / 1000) * fps);
         const durationInFrames = Math.max(1, endFrame - startFrame);
         return (
           <Sequence key={i} from={startFrame} durationInFrames={durationInFrames}>
@@ -131,15 +163,8 @@ const WordHighlight: React.FC<{
   );
 };
 
-type TikTokPage = {
-  text: string;
-  startMs: number;
-  durationMs: number;
-  tokens: { text: string; fromMs: number; toMs: number }[];
-};
-
 const WordPage: React.FC<{
-  page: TikTokPage;
+  page: WordPage;
   theme: CaptionTheme;
   layout: CaptionLayout;
 }> = ({ page, theme, layout }) => {
