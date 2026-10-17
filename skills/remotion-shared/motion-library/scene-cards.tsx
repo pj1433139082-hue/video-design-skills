@@ -30,6 +30,18 @@ import {
   type SectionCut,
   type TextCut,
 } from "./scene-cards-text";
+import {
+  BarChartCard,
+  KPIGrid,
+  LineChartCard,
+  PieCard,
+  RingCard,
+  type BarCut,
+  type KpiCut,
+  type LineCut,
+  type PieCut,
+  type RingCut,
+} from "./scene-cards-chart";
 
 // ---------- 数据契约：SceneCut ----------
 // 每句/每段口播对应一个 cut；build 按 cut.type 分发到对应场景卡，而非每帧手写。
@@ -46,7 +58,7 @@ export type StatCut = {
   caption?: string; // 可选补充句
 };
 
-// T2 起 union 扩到文字/要点/对比/标题类；T3 再扩图表类（pie/kpi）。
+// T2 起 union 扩到文字/要点/对比/标题类；T3 扩图表类（pie/kpi/bar/line/ring）。
 // 每加一种 type = 在 SceneCut union 加一支 + 在 SceneRenderer 加一个 case + 写一张卡。
 export type SceneCut =
   | StatCut
@@ -55,7 +67,12 @@ export type SceneCut =
   | ComparisonCut
   | HeroCut
   | SectionCut
-  | EndCut;
+  | EndCut
+  | PieCut
+  | KpiCut
+  | BarCut
+  | LineCut
+  | RingCut;
 
 // ---------- 场景卡主题（token 注入接口，走项目 tokens.ts） ----------
 export type SceneCardTheme = {
@@ -233,10 +250,30 @@ export const SceneRenderer: React.FC<{
       const { type, ...rest } = cut;
       return <EndTag {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
     }
+    case "pie": {
+      const { type, ...rest } = cut;
+      return <PieCard {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
+    case "kpi": {
+      const { type, ...rest } = cut;
+      return <KPIGrid {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
+    case "bar": {
+      const { type, ...rest } = cut;
+      return <BarChartCard {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
+    case "line": {
+      const { type, ...rest } = cut;
+      return <LineChartCard {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
+    case "ring": {
+      const { type, ...rest } = cut;
+      return <RingCard {...rest} {...theme} durationFrames={durationFrames} delayFrames={delayFrames} />;
+    }
     default: {
       const badType = (cut as { type: string }).type;
       throw new Error(
-        `SceneRenderer: 未知 cut.type "${badType}"（当前支持 stat/text/callout/comparison/hero/section/end；扩充见 scene-cards-contract.md）`
+        `SceneRenderer: 未知 cut.type "${badType}"（当前支持 stat/text/callout/comparison/hero/section/end/pie/kpi/bar/line/ring；扩充见 scene-cards-contract.md）`
       );
     }
   }

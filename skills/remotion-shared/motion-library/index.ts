@@ -37,6 +37,8 @@ export * from "./scene-cards";
 export * from "./scene-cards-text";
 // 场景卡转场层 T5：SceneTransitionSeries（crossfade 串联场景卡，消卡间硬切/渐入空白；零新增依赖）
 export * from "./scene-transition";
+// 场景卡系统 T3：数据可视化场景卡（PieCard/KPIGrid 新建 + BarChartCard/LineChartCard/RingCard 包装已有原语）
+export * from "./scene-cards-chart";
 
 export type { HighlightMode, CaptionTheme, CaptionLayout } from "./captions-highlight";
 export type { SceneCut, StatCut, SceneCardTheme } from "./scene-cards";
