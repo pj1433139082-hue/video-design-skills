@@ -87,6 +87,8 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 | 修改 | 用户提改 | 5 轮/次 | 改什么清楚，每轮对照验收标准 |
 | 最终 | 交付前 | 4 轮 | 逐条过验收标准 |
 
+> **门禁执行正本（#21）**：Step 5 的命令/阈值/台账模板/降级话术唯一正本 = `references/step5-gate-runbook.md`；本节约束只引用不复制数字。**每次验收必须产出门禁台账**（逐行 PASS/FAIL/SKIPPED/NOT-RUNNABLE + 证据），审美/动效维度有 NOT-RUNNABLE/SKIPPED → 交付定性降级"非合规交付/基线素材"。
+
 **硬性验收动作（先抽帧后渲染，防长时间渲染白跑）**：
 **分层量化（4 层，在 DESIGN §8.2 证明时刻关键帧=句首/中段/0.82 终态 上做）**：
 - **层1 背景图**（场景图本身）：`python scripts/media/layout_calc.py <场景图>`——构图/留白/建议文字区（按图留白结构找空区，不强制顶部纯净；顶部被侵入 → 文字移位到 `text_zone` 建议区，或重生成更纯净图）；
@@ -107,6 +109,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
    - 素材：无 AI 乱码文字、层次符合 §8.1、透明叠加干净
    - 场景卡（若 §8.2 标了 `cut.type`）：`SceneRenderer` 按 type 正确渲染、数值/标签/单位齐全、对比度达底线、卡为主画面不与背景场景图重叠；**未静默降级**（未知 type 应已抛错，不是空白帧）
    - 动效：至少 2 种动效在场（素材进出场 + 字体 + 背景 三选二）、背景带动效
+   - **轮播检测（#21，runbook §三）**：整片 YAVG 均值 ≥0.05 且各动效窗口 ≥0.10；DESIGN §8/§8.2 动效清单→build 实现**逐条对账表**（实现组件/代码位置/抽帧证据），§8 写了没做 = FAIL；转场非全片单一 fade。三条全过才不算"图片轮播式偷工"
    - 无 AI 味：对照 `video-anti-slop.md` 反向提示词
 6. **遮挡校验 + 视觉模式核对（借鉴 paper-collage-video spatial-contract，2026-08-16 扩展）**：抽帧逐句验证——①大字胶囊在预留区（顶部留白）②主体不压大字/字幕区 ③前景不遮挡中后景主体 ④**卡动效与场景图不重叠**：完整画面卡（里程表/表盘/粒子柱/聚光暗场）绝不当场景图叠加（视觉模式三选一，见 DESIGN §8.2）⑤**动效意义与句意呼应**（vision 判粒子柱/扫光/数字滚动在该场景表达什么、是否与口播语义一致，意义不明触发修订）。遮挡/意义不明 → 改视觉模式或去掉多余卡。
 7. **四技能审查硬门禁**（任一门禁不过 → 修订，不是参考）：**用子智能体独立跑（hallmark/taste 由独立 agent 执行，不主模型自审自放）**——
@@ -116,9 +119,10 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
    - `open-design/anti-ai-slop`（"七宗罪"去模板）
    抽帧/成片对照审，**按过条数计分放行（评审补，防自审自放）**：hallmark 57 门禁过 ≥90%（≥51 条）才放行、taste 40+ 项过 ≥85% 才放行、ui-ux-pro-max / open-design 关键项全过；**未过条数列出触发修订**，过全部门禁才 render 交付。
 8. `npx remotion render <id> out/final.mp4`；
-9. **动作证明时刻（借鉴 paper-collage-video proof moments）**：按 DESIGN §8.2 每句证明时刻（句首/中段/0.82 终态）抽帧 + 验证动作类型**真实发生**（入场已发生/持续在动/终态定格）；`ffmpeg -vf "fps=4"` 抽连续帧 → vision 判动作按 DESIGN 发生——平移一帧静态帧 ≠ 动作证明（粒子/聚光/数字必须连续帧确认）；转场平滑/进出场无跳变（video-quality-metrics §四.6）；
+9. **动作证明时刻（借鉴 paper-collage-video proof moments）**：按 DESIGN §8.2 每句证明时刻（句首/中段/0.82 终态）抽帧 + 验证动作类型**真实发生**（入场已发生/持续在动/终态定格）；`ffmpeg -vf "fps=4"` 抽连续帧 → vision 判动作按 DESIGN 发生——平移一帧静态帧 ≠ 动作证明（粒子/聚光/数字必须连续帧确认）；转场平滑/进出场无跳变（video-quality-metrics §四.6）；**客观阈值（#21，runbook §二）**：每个动效/转场窗口跑 `ffmpeg -vf "select='between(n,A,B)',tblend=all_mode=difference,signalstats,metadata=print"`，窗口逐帧 YAVG **≥0.10** = 有真实运动；连续多帧 ≈0 = 静态/冻结 → FAIL（vision 复核是定格设计还是漏做动效）；
 10. **音画同步核对（口播片主轴，评审补）**：成片跑 `python scripts/media/audio_sync_check.py out/final.mp4 public/captions.srt`——每句 srt 句首 ±0.15s 应有配音声音（RMS≥0.01），句首静音 = 配音错位/缺失/句尾截断 → 修订；
 11. 逐条核对验收标准 → STATUS PASS/FAIL/BLOCKED，NEXT_OWNER。
+12. **门禁台账（#21 强制）**：按 `references/step5-gate-runbook.md` §一 产出台账表（逐行 状态+证据）；审美/动效维度（5.5/5.6/5.7/5.9/符合性）任一 NOT-RUNNABLE/SKIPPED → 按 runbook §四 话术在交付说明首行标 `定性：非合规交付/基线素材（原因：…）`；全 PASS 才标 `合规交付`。**台账缺失 = 未验收，禁口头"全门禁通过"**。
 
 ## 红线
 - **字幕驱动是硬约束（有字幕时）**：captions.srt 存在即时间轴唯一来源，时长由其推导；无字幕类别（brand-motion）由场景基准时长 / BGM 节拍驱动，不强制 captions.srt。
@@ -129,6 +133,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 - **配音驱动 srt 重建是必须（Step 1.5，先配音后抽帧）**：口播片 Step 1.5 必须 TTS→ffprobe→重建 srt 定时间轴（时序以 TTS 实测为准，DESIGN §4），抽帧验收在配音重建 srt 之后，不问用户。
 - **不改设计方向**：DESIGN.md 定了就照做；要改方向回 remotion-consult。
 - **禁编造**：字幕/数据不虚构。
+- **门禁诚实（#21）**：未跑的门禁不得写通过；`NOT-RUNNABLE`/`SKIPPED` 必须写明 blocker 并按 runbook 降级定性（审美/动效维度缺门禁 = "非合规交付/基线素材"）；"部分通过"≠"通过"。门禁台账为验收唯一凭证。
 
 ## 参考文件
 
