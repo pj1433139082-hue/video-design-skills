@@ -106,3 +106,13 @@ const captions: Caption[] = [
   { text: "比红光强", startMs: 800, endMs: 1600 },
 ];
 ```
+
+## 八、自适应字幕衬底（adaptive scrim，T6）
+
+写死的固定 scrim（如 `captionStroke 0.85` / `captionBg 0.45`）在**亮底过暗、暗底对比不足**。改用 `motion-library/adaptive-scrim.tsx`（clean-room 借鉴 heroScrim 思路，未复制代码）：
+
+- `bgLightnessToScrim(l)`：`opacity = clamp(0.30 + 0.50*l, 0.30, 0.80)`——亮底强衬底、暗底轻衬底；保证白字幕对比 ≥3:1（实测亮底 0.85 → opacity 0.725 → 对比 ≈9.4:1；暗底更高）。
+- `<AdaptiveCaptionScrim bgLightness mode="gradient" height />`：底部渐变衬底层，放**字幕层之下、场景层之上**。
+- `captionScrimBoxStyle(l)`：字幕胶囊/盒衬底 CSS（box 模式）。
+- `bgLightness`（0-1）= DESIGN §8.1 每场景字段，由 layout_calc / 视觉判断 / 素材平均亮度给出。
+- **验收**：frame_judge 的 `--text-bg-hex` 用"衬底 over 背景"加权合成后的有效色核字幕对比 ≥3:1；衬底强度必须由 bgLightness 驱动，**不得写死固定值**。

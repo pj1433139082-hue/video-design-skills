@@ -20,7 +20,7 @@
 | 节奏 | `interpolate` 变速 / 句间 200-400ms / 场景时长 |
 | 音乐 | 阶段 2 配音（当前纯字幕驱动，BGM 走 `@remotion/media`） |
 | 声画配合 | 字幕 `CaptionLayer` 位置 / 场景布局 / 安全区 |
-| 转场 | motion-library 转场组件选型（100 个里挑） |
+| 转场 | motion-library 转场组件选型（101 个里挑） |
 | 叙事 | 场景蓝图（第 N 句 → 画面）编排 |
 | 技法 | 数据动画/kinetic type/粒子等选择性使用 |
 
