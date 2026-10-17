@@ -8,7 +8,8 @@
 | `BarGrowth` / `AnimatedBarChart` | 柱条生长 / 完整柱状图 | `durationFrames=30`, 每条延迟 0.3s |
 | `FadeTransition` | 场景转场 | `durationFrames=10` |
 | `FadeEntrance` | 图表入场 | `durationFrames=20` |
-| `CaptionLayer` | 整句字幕 | `highlightMode="line"` |
+| `CaptionLayer` | 逐词字幕（需 word 级 captions；句级 srt 显式降级 line） | `highlightMode="word"` |
+| `SceneRenderer` / `SceneTransitionSeries` | 数据场景卡组装（stat/kpi/bar/line/pie/ring）+ 卡间 crossfade | cut.type 由 DESIGN §8.2 场景卡编列表驱动 |
 
 ## 纪律
 

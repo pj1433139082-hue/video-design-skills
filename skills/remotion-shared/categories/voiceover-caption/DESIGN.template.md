@@ -17,6 +17,7 @@
 - 字幕字体：Noto Sans SC 800，64px（1080 宽基准；字号字重底线以 `remotion-build/references/video-quality-metrics.md` §字幕硬阈值为准），白 + 描边
 - 高亮色 = 强调色（默认 volt 黄绿 `#AFFF00` 或珊瑚红）
 - 字幕区：底部居中，safeArea 上下 ≥120px，maxLines 2
+- **场景卡（T7 收口）**：数据句/要点句/对比句/开场/收尾优先用场景卡（stat/kpi/callout/comparison/hero/end），cut.type 列于 DESIGN §8.2「场景卡编列表」；卡间用 `SceneTransitionSeries` crossfade，**禁相邻 Sequence 硬接**（防硬切/渐入空白）。
 
 ### 配色（默认色板）
 | token | 值 |

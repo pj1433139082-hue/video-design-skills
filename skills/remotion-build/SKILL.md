@@ -71,7 +71,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
 - 项目 init：从 `_dev/remotion-tutorial` 复制骨架 + `npm i @remotion/captions@<对齐版本>` + 保留 Chrome 路径。
 - **从总动效库 import 组件**（`工作台/视频/_动效库/`）或复制到 `src/components/`。
 - **镜头卡可选接入**：DESIGN §8.2 选卡则照 `remotion-shared/video-shots-spec.md`「镜头卡接入步骤」执行（含 `[copy]`/`[借思路]` 意图标记）；中文片默认借思路。
-- **场景卡（数据驱动，T1 起）**：DESIGN §8.2 标了 `cut.type` 的句子，用 `motion-library/scene-cards.tsx` 的 `<SceneRenderer cut={{ type: "stat", ... }} />` 按 type 渲染场景卡（当前 `stat/text/callout/comparison/hero/section/end/pie/kpi/bar/line/ring` 可用；契约见 `motion-library/scene-cards-contract.md`），颜色/字体从 tokens 传入，**不必手搓数据卡 SVG**；未知 `cut.type` 会**显式抛错**（不静默渲染空白）。
+- **场景卡（数据驱动，T1 起 · T7 收口为默认路径）**：DESIGN §8.2「场景卡编列表」标了 `cut.type` 的句子，**默认从场景卡组装**——单卡用 `motion-library/scene-cards.tsx` 的 `<SceneRenderer cut={{ type: "stat", ... }} />`，背靠背多卡用 `scene-transition.tsx` 的 `<SceneTransitionSeries>`（当前 `stat/text/callout/comparison/hero/section/end/pie/kpi/bar/line/ring` 可用；契约见 `motion-library/scene-cards-contract.md`），颜色/字体从 tokens 传入；**手搓 SVG 仅作无对应卡型时的兜底**，且须在验收记录说明原因；未知 `cut.type` 会**显式抛错**（不静默渲染空白）。
 - **场景卡串联转场（T5，防硬切/渐入空白）**：背靠背多张场景卡**不要**用相邻 `<Sequence>` 硬接（实测会硬切 pop + 段首若干帧只剩平底背景近空白）；改用 `motion-library/scene-transition.tsx` 的 `<SceneTransitionSeries items={[{cut,theme},...]} segmentFrames crossfadeFrames />` 交叉淡化串联——overlap 期 outgoing/incoming 透明度互补（和≈1），任何一帧至少一卡可见，不露空底；首卡默认不渐入（`firstFadeIn=false`）消开头空白。**零新增依赖**；需官方 slide/wipe/flip 等 presentation 再装可选 `@remotion/transitions`（见 `docs/DEPENDENCIES.md` 可选项）。
 - src 分层：Root.tsx / theme.ts / captions.ts / components/。
 - 确定性动画（`useCurrentFrame`/`interpolate`/`spring`，禁 `Math.random` 与浏览器定时器）。
@@ -102,6 +102,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
    - 字幕：存在且对齐、可读（对比度 ≥3:1）、无破字
    - 逐词字幕（若 word 模式）：vision 核高亮粒度 = **逐词依次点亮**（多 token 依次 active），**非整句同亮**；整句同亮 = 中文未预分词 → 补 word 级 captions（`references/captions-guide.md` §七）或**显式降级** `line` 并在验收记录标注"句级降级"，**不静默**
    - 自适应衬底（若用 `AdaptiveCaptionScrim`）：衬底强度由 §8.1 `bgLightness` 驱动（**不写死固定值**）；frame_judge `--text-bg-hex` 用"衬底 over 背景"合成有效色核字幕对比 ≥3:1（见 `references/captions-guide.md` §八）
+   - **DESIGN→build 场景卡符合性（T7 收口）**：§8.2「场景卡编列表」每句标了 `cut.type` 的，build 必须**真实渲染**对应场景卡——抽帧对账卡型/字段/数值与 §8.2 一致；**§8 写了没做 = 缺实现证据 = FAIL**（防手搓偷工/轮播式偷工）
    - 转场：句间有转场/入场动效，不是裸切或静止
    - 素材：无 AI 乱码文字、层次符合 §8.1、透明叠加干净
    - 场景卡（若 §8.2 标了 `cut.type`）：`SceneRenderer` 按 type 正确渲染、数值/标签/单位齐全、对比度达底线、卡为主画面不与背景场景图重叠；**未静默降级**（未知 type 应已抛错，不是空白帧）

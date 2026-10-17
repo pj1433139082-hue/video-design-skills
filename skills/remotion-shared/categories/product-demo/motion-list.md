@@ -8,6 +8,7 @@
 | `FadeEntrance` | 截图/主体入场 | `durationFrames=20` |
 | `FadeTransition` | 场景转场 | `durationFrames=10` |
 | `CaptionLayer` | 整句字幕 | `highlightMode="line"` |
+| `SceneRenderer` / `SceneTransitionSeries` | 开场/章节/对比/要点/收尾场景卡组装 + 卡间 crossfade | cut.type 由 DESIGN §8.2 场景卡编列表驱动（hero/section/comparison/callout/end） |
 
 ## 纪律
 

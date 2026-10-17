@@ -96,6 +96,17 @@
 > - **手动覆盖**：用户可指定某句力度/范围，覆盖自动值（"这句弱化/这句强"）。
 > - **三版本**：每句/全片可出 3 个动效方案（弱/中/强 或 不同卡组合），用户选一个再 build。
 > - 规范目标：全片动效**有层次**（不是每句全屏大动效刺眼，也不是全静态单调），力度与句子重要性匹配。
+
+**场景卡编排列（T7 收口 · 完整 cut.type）**：凡视觉模式 = `纯卡` 或含卡的句子，**必须**在下表列明 `cut.type` 与 cut 字段；build 据此用 `SceneRenderer` / `SceneTransitionSeries` 组装，并在 Step 5 做 **DESIGN→build 场景卡符合性对账**（§8.2 写了的卡必须真实渲染，缺实现证据即 FAIL）。可用 type 与字段见 `motion-library/scene-cards-contract.md`。
+
+| # | 口播 | 视觉模式 | 场景卡 cut.type | cut 字段（关键） | 串联方式 |
+|---|------|---------|----------------|------------------|---------|
+| 1 | （开场句） | 纯卡 | hero | title / subtitle | 首卡（不渐入） |
+| 2 | （数据句） | 纯卡 | stat | label / value / prefix / suffix / decimals | 与句3 crossfade |
+| 3 | （对比句） | 纯卡 | comparison | leftLabel/leftValue/rightLabel/rightValue | 与句2 crossfade |
+| 4 | （要点句） | 纯卡 | callout | title / body | 与句5 crossfade |
+| 5 | （收尾句） | 纯卡 | end | tagline / credit | 末卡 |
+| ... | ... | ... | （pie/kpi/bar/line/ring/text/section 按需） | ... | ... |
 |---|------|------|-------------------|--------------|---------|---------|---------|---------|
 | 1 | 从豆子开始 | 0.5-2.8s | camera/steep-tilt-glide（俯冲推进） | bg-1 豆子（背景）+ SHIWEI 大字 | 缩放淡入 | 下句前溶解 | 字距展开 | "豆子"脱口时豆子浮现 |
 | 2 | 深烘醇厚 | 3.3-5.6s | typography/gradient-word-sweep（扫光） | mid-1 烘豆（中景）+ mono 数据 | 上滑入 | 溶解出 | mono 数据滚动 | "深烘"处数据闪出 |

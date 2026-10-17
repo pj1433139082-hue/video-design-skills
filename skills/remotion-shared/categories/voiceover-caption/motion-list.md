@@ -8,6 +8,7 @@
 |------|------|---------|
 | `CaptionLayer` | 词级高亮字幕层（核心） | `highlightMode="word"`, `switchEveryMs=1200` |
 | `SpringEntrance` | 每场景主体入场 | `durationFrames=20`, spring `{damping:10,stiffness:80}` |
+| `SceneRenderer` / `SceneTransitionSeries` | 数据/要点/对比/开场/收尾场景卡组装 + 卡间 crossfade | cut.type 由 DESIGN §8.2 场景卡编列表驱动（stat/callout/comparison/hero/end） |
 
 ## 转场
 
