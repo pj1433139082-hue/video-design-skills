@@ -39,6 +39,8 @@ export * from "./scene-cards-text";
 export * from "./scene-transition";
 // 场景卡系统 T3：数据可视化场景卡（PieCard/KPIGrid 新建 + BarChartCard/LineChartCard/RingCard 包装已有原语）
 export * from "./scene-cards-chart";
+// 自适应字幕衬底 T6：AdaptiveCaptionScrim / bgLightnessToScrim / captionScrimBoxStyle（按背景明暗自适应，守对比度底线）
+export * from "./adaptive-scrim";
 
 export type { HighlightMode, CaptionTheme, CaptionLayout } from "./captions-highlight";
 export type { SceneCut, StatCut, SceneCardTheme } from "./scene-cards";

@@ -101,6 +101,7 @@ description: 按视频设计系统（DESIGN.md）用 Remotion 生成 MP4 视频�
    - 构图：≥2 视觉元素、不每场居中、层次 z 序正确（bg/mid/fg）
    - 字幕：存在且对齐、可读（对比度 ≥3:1）、无破字
    - 逐词字幕（若 word 模式）：vision 核高亮粒度 = **逐词依次点亮**（多 token 依次 active），**非整句同亮**；整句同亮 = 中文未预分词 → 补 word 级 captions（`references/captions-guide.md` §七）或**显式降级** `line` 并在验收记录标注"句级降级"，**不静默**
+   - 自适应衬底（若用 `AdaptiveCaptionScrim`）：衬底强度由 §8.1 `bgLightness` 驱动（**不写死固定值**）；frame_judge `--text-bg-hex` 用"衬底 over 背景"合成有效色核字幕对比 ≥3:1（见 `references/captions-guide.md` §八）
    - 转场：句间有转场/入场动效，不是裸切或静止
    - 素材：无 AI 乱码文字、层次符合 §8.1、透明叠加干净
    - 场景卡（若 §8.2 标了 `cut.type`）：`SceneRenderer` 按 type 正确渲染、数值/标签/单位齐全、对比度达底线、卡为主画面不与背景场景图重叠；**未静默降级**（未知 type 应已抛错，不是空白帧）
