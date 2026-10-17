@@ -13,7 +13,7 @@
 - 词级高亮 `switchEveryMs` 1200ms
 
 ### 字幕风格
-- **词级高亮 TikTok 风**（highlightMode: "word"）
+- **词级高亮 TikTok 风**（highlightMode: "word"）；**前置条件**：captions 须为 **word 级**（中文预分词，见 `remotion-build/references/captions-guide.md` §七）——中文无空格，句级 captions 在 word 模式会整句同亮（退化）；仅有句级 srt 时**显式降级** `line` 并在 DESIGN/验收记录标注"句级降级"，**不静默**。
 - 字幕字体：Noto Sans SC 800，64px（1080 宽基准；字号字重底线以 `remotion-build/references/video-quality-metrics.md` §字幕硬阈值为准），白 + 描边
 - 高亮色 = 强调色（默认 volt 黄绿 `#AFFF00` 或珊瑚红）
 - 字幕区：底部居中，safeArea 上下 ≥120px，maxLines 2
