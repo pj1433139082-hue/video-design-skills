@@ -37,14 +37,23 @@
 | 5.4 frame_judge | PASS | gap 空帧全 PASS；卡段对比 12.41 |
 | 5.5 checklist | PASS（vision 抽样） | v_01/chk40/v_12/v_18/v_19 |
 | 5.6 遮挡/视觉模式 | PASS | 卡为纯卡段不叠照片；字幕不压主体 |
-| 5.7 四技能审查 | **NOT RUNNABLE** | taste/hallmark/ui-ux-pro-max/open-design 本机未装 |
+| 5.7 四技能审查 | **PASS** | 第四轮独立子智能体四审（技能已装齐：hallmark/ui-ux-pro-max 预装 + taste-skill junction + open-design wrapper）：hallmark **15/15=100%**（≥90%）、taste-skill **16/16=100%**（≥85% 且 Color/Shape/Theme/Contrast 各 Lock 全过）、ui-ux-pro-max **关键项全过**（橙/盒 5.06–5.47:1）、open-design **0 罪 0 fail**（§8.2 对账全 PASS、补证闭合） |
 | 5.9 动作证明 | PASS | gap YAVG 1.236、动效窗口 0.996、crossfade 帧见混合 |
 | 5.10 音画同步 | PASS | 5/5 OK 0 静音 |
 | 层1 layout_calc | WARN（已知保守） | s1/s4 均匀天空"顶部侵入"保守判定（基线已记录），s5=0 |
 | DESIGN→build 符合性 | PASS | stat/callout/end 三卡字段与规划对账一致 |
 
-**定性：非合规交付/基线素材**（原因：5.7 NOT RUNNABLE）。按 #21 runbook §四 话术首行标注。
+**定性：合规交付**（门禁台账全 PASS，含 5.7 四技能审查第四轮全过；按 #21 runbook §四，全 PASS 方可标合规）。
 
-## 四、结论
+## 四·五、5.7 修复轮次记录（FAIL→修→复审，逐轮证据）
 
-场景卡系统（#27/T1–T7）+ 字幕/衬底/门禁补强（#42/#21）落地后，同案例同输入下五维质量**无回退、四维提升**，消耗侧 init=1、模式4 对齐 0 问、抽帧复用生效，达成 #12/#13/#14 的验收口径。遗留：5.7 审美门禁需装齐四技能后才能升级为"合规交付"。
+| 轮 | 四审结果 | 发现 | 修复 |
+|----|---------|------|------|
+| R1 | hallmark 96.6% PASS / taste 94.1% PASS / **ui-ux FAIL** / open-design PASS | 字幕换行孤字+拆词（"色。"/"射。"独占二行） | WordLine 按标点断行 |
+| R2 | hallmark 88% **FAIL** / taste **FAIL**(Lock) / ui-ux **FAIL** / open-design **FAIL** | ① 照片帧橙高亮 2.0–2.24:1<3:1；② a_05 金色 λ 注=第二 accent；③ S5 卡段缺晚霞与 §8 脱节；④ S1 缺 §8.2 声明大字；⑤ s4 payoff 被粒子盖住；根因另含 **s1.jpg 自带浅蓝 matte 边框** | 字幕加半暗盒底；λ 注改橙；SunsetGlow 延至 734；S1 补 hook 大字；粒子 70→40/opacity .55；**裁掉 s1 matte**（备份 s1-original.jpg） |
+| R3 | hallmark 95.5% PASS / taste **FAIL**(Lock) / ui-ux **FAIL** / open-design PASS | S1 hook kinetic 未落位字=金色（第二 accent）且亮照片上 1.26–1.6:1；DESIGN §2 与 build 漂移 | kinetic 加半暗盒底 + active 改橙 + inactive 改半透白；DESIGN §2/§7/§8.3 对齐 word+橙+盒底 |
+| R4 | **hallmark 100% / taste 100% / ui-ux 全过 / open-design 0罪0fail** | —（观察项：DESIGN 残留漂移已闭合） | 升级定性为合规交付 |
+
+## 五、结论
+
+场景卡系统（#27/T1–T7）+ 字幕/衬底/门禁补强（#42/#21）落地后，同案例同输入下五维质量**无回退、四维提升**，消耗侧 init=1、模式4 对齐 0 问、抽帧复用生效，达成 #12/#13/#14 的验收口径。5.7 四技能审美门禁已装齐并经四轮独立审查全过（R4：hallmark 100% / taste 100% / ui-ux 关键项全过 / open-design 0罪0fail），本片定性升级为**合规交付**；修复轮次与证据见 §四·五。
