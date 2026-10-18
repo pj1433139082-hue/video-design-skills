@@ -57,3 +57,20 @@
 ## 五、结论
 
 场景卡系统（#27/T1–T7）+ 字幕/衬底/门禁补强（#42/#21）落地后，同案例同输入下五维质量**无回退、四维提升**，消耗侧 init=1、模式4 对齐 0 问、抽帧复用生效，达成 #12/#13/#14 的验收口径。5.7 四技能审美门禁已装齐并经四轮独立审查全过（R4：hallmark 100% / taste 100% / ui-ux 关键项全过 / open-design 0罪0fail），本片定性升级为**合规交付**；修复轮次与证据见 §四·五。
+
+## 六、附录：重做前备份清单（可回滚凭证）
+
+备份位置（维护者本机，不随仓）：`D:\obsidian_work\cangku\paper_work\智能体管家\backup-case-t25-pre-scenecards\`，共 **21 文件 / 240K**。每个时点对齐"相应改动的前态"，可逐文件回滚：
+
+| 备份项 | 大小 | 前态时点（对应改动） |
+|--------|------|---------------------|
+| `Root.tsx` | 9,961 B | 场景卡重做前（motion-design 版 = `out/final.mp4` 源码） |
+| `captions.ts` | 1,163 B | 同套备份（该文件全程未改） |
+| `theme.ts` | 1,727 B | captionActive 改橙前（原 `#FFD24A`） |
+| `DESIGN.md` | 13,495 B | §2/§7/§8.3 漂移闭合前（原 line/`#FFD24A` 表述） |
+| `s1-original.jpg` | 81,818 B | 裁浅蓝 matte 前原始素材 |
+| `components/`（16 文件） | — | 拷入 5 个 scene-card 组件前的 motion-library 副本 |
+
+`components/` 16 文件：`backgrounds.tsx`、`backgrounds-extra.tsx`、`captions-highlight.tsx`、`data-anim.tsx`、`entrances.tsx`、`entrances-advanced.tsx`、`entrances-extra.tsx`、`entrances-more.tsx`、`index.ts`、`kinetic-type.tsx`、`motion-extras.tsx`、`scenes.tsx`、`transitions.tsx`、`transitions-advanced.tsx`、`transitions-extra.tsx`、`transitions-more.tsx`。
+
+**完整性核对**：备份不含 5 个 scene-card 新组件（定位即"重做前态"；现态 `components/` 为 21 文件）；三时点各自对齐（Root/captions/theme/components = 重做前、s1-original = 裁 matte 前、DESIGN = 漂移闭合前）。案例 src 不受 git 跟踪，故本备份是唯一回滚凭证。
